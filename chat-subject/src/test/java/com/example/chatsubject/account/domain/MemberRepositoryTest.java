@@ -21,7 +21,11 @@ class MemberRepositoryTest {
     @Test
     void save_when_arguments_are_normal() {
         //given
-        Member member = new Member("cooper", "123");
+        Member member = Member.builder()
+                .name("cooper")
+                .password("123")
+                .email("cooper@rsupport.com")
+                .build();
 
         //when
         Member savedMember = testEntityManager.persist(member);
