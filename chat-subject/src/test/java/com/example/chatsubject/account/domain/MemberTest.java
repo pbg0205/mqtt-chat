@@ -11,7 +11,11 @@ class MemberTest {
     @Test
     @DisplayName("이름과 비밀번호를 기재했을 경우, 멤버를 생성된다.")
     void createTest() {
-        Member member = new Member("cooper", "123");
+        Member member = Member.builder()
+                .name("cooper")
+                .password("123")
+                .build();
+
         assertThat(member.getName()).isEqualTo("cooper");
         assertThat(member.getPassword()).isEqualTo("123");
     }
@@ -21,7 +25,10 @@ class MemberTest {
     void retrieve_illegal_argument_exception_when_name_is_empty() {
         assertThrows(
                 IllegalArgumentException.class,
-                () -> new Member("", "123"),
+                () -> Member.builder()
+                        .name("")
+                        .password("123")
+                        .build(),
                 "이름이 존재하지 않습니다."
         );
     }
@@ -31,7 +38,10 @@ class MemberTest {
     void retrieve_illegal_argument_exception_when_password_is_empty() {
         assertThrows(
                 IllegalArgumentException.class,
-                () -> new Member("cooper", ""),
+                () -> Member.builder()
+                        .name("cooper")
+                        .password("")
+                        .build(),
                 "비밀번호가 존재하지 않습니다."
         );
     }

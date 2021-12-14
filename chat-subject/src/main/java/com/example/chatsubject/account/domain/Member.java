@@ -1,9 +1,6 @@
 package com.example.chatsubject.account.domain;
 
-import lombok.AccessLevel;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -25,6 +22,7 @@ public class Member {
     @Column(name = "member_password", nullable = false)
     private String password;
 
+    @Builder
     public Member(String name, String password) {
         this.name = name;
         this.password = password;
