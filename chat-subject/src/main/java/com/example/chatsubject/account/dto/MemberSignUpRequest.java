@@ -1,25 +1,26 @@
 package com.example.chatsubject.account.dto;
 
 import com.example.chatsubject.account.domain.Member;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 @Getter
-@RequiredArgsConstructor
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class MemberSignUpRequest {
 
     @NotBlank
-    private final String name;
+    private String name;
 
     @NotBlank
-    private final String password;
+    private String password;
 
     @Email
     @NotBlank
-    private final String email;
+    private String email;
 
     public Member toEntity() {
         return Member.builder()
