@@ -29,9 +29,13 @@ class MemberSignUpRequestTest {
     @Test
     @DisplayName("정상 요청 값을 확인한다.")
     void request_normal_input_values() {
+
         //given
-        MemberSignUpRequest request
-                = new MemberSignUpRequest("cooper", "123", "cooper123@rsupport.com");
+        MemberSignUpRequest request = new MemberSignUpRequest(
+                "cooper",
+                "123",
+                "cooper123@rsupport.com"
+        );
 
         //when
         Set<ConstraintViolation<MemberSignUpRequest>> constraintValidations = validator.validate(request);
@@ -44,6 +48,7 @@ class MemberSignUpRequestTest {
     @MethodSource("provide_string_for_name_is_blank")
     @DisplayName("이름을 추가하지 않은 요청일 경우, 잘못된 요청이다.")
     void request_normal_input_except_name(String name, String password, String email) {
+
         //given
         MemberSignUpRequest request = new MemberSignUpRequest(name, password, email);
 
@@ -63,9 +68,10 @@ class MemberSignUpRequestTest {
     }
 
     @ParameterizedTest
-    @DisplayName("비밀번호을 추가하지 않은 요청일 경우, 잘못된 요청이다.")
     @MethodSource("provide_string_for_password_is_blank")
+    @DisplayName("비밀번호을 추가하지 않은 요청일 경우, 잘못된 요청이다.")
     void request_normal_input_except_password(String name, String password, String email) {
+
         //given
         MemberSignUpRequest request = new MemberSignUpRequest(name, password, email);
 
@@ -88,6 +94,7 @@ class MemberSignUpRequestTest {
     @MethodSource("provide_string_for_email")
     @DisplayName("이메일을 추가하지 않은 요청일 경우, 잘못된 요청이다.")
     void request_normal_input_except_email(String name, String password, String email) {
+
         //given
         MemberSignUpRequest request = new MemberSignUpRequest(name, password, email);
 
