@@ -3,6 +3,7 @@ package com.example.chatsubject.account.controller;
 import com.example.chatsubject.account.dto.MemberSignUpRequest;
 import com.example.chatsubject.account.dto.MemberSignUpResponse;
 import com.example.chatsubject.account.service.MemberService;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -23,6 +24,7 @@ class MemberControllerTest {
     private MemberService memberService;
 
     @Test
+    @DisplayName("회원가입 정상 동작을 테스트한다.")
     void should_return_sign_up_result() throws Exception {
         //given
         MemberSignUpRequest request = new MemberSignUpRequest("cooper", "123", "cooper@rsupport.com");
@@ -36,7 +38,6 @@ class MemberControllerTest {
                         .param("password", "123")
                         .param("email", "cooper@rsupport.com"))
                 .andExpect(status().isCreated())
-                .andExpect(view().name("/index"))
-                .andExpect(model().attribute("member", response));
+                .andExpect(view().name("/index"));
     }
 }
