@@ -35,7 +35,7 @@ class MemberServiceTest {
         MemberSignUpResponse response = memberService.signUpMember(request);
 
         //then
-        assertThat(request.getName()).isEqualTo(response.getName());
+        assertThat(request.getNickname()).isEqualTo(response.getName());
         assertThat(request.getEmail()).isEqualTo(response.getEmail());
     }
 }

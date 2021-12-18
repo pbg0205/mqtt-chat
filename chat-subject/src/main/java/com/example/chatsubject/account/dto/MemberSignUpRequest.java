@@ -13,7 +13,7 @@ import javax.validation.constraints.NotBlank;
 public class MemberSignUpRequest {
 
     @NotBlank
-    private String name;
+    private String nickname;
 
     @NotBlank
     private String password;
@@ -24,9 +24,9 @@ public class MemberSignUpRequest {
 
     public Member toEntity() {
         return Member.builder()
-                .name(name)
                 .password(password)
                 .email(email)
+                .nickname(nickname)
                 .build();
     }
 }

@@ -20,7 +20,7 @@ public class MemberService {
         Member member = memberSignUpResponse.toEntity();
         Member savedMember = memberRepository.save(member);
         return MemberSignUpResponse.builder()
-                .name(savedMember.getName())
+                .name(savedMember.getNickname())
                 .email(savedMember.getEmail())
                 .build();
     }

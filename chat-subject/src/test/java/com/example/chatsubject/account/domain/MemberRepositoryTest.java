@@ -22,9 +22,9 @@ class MemberRepositoryTest {
     void save_when_arguments_are_normal() {
         //given
         Member member = Member.builder()
-                .name("cooper")
-                .password("123")
                 .email("cooper@rsupport.com")
+                .password("123")
+                .nickname("cooper")
                 .build();
 
         //when

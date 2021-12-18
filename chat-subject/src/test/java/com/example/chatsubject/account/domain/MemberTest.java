@@ -12,12 +12,12 @@ class MemberTest {
     @DisplayName("이름과 비밀번호, 이메일를 정상 기재했을 경우, 멤버를 생성한다.")
     void createTest() {
         Member member = Member.builder()
-                .name("cooper")
                 .password("123")
                 .email("cooper@rsupport.com")
+                .nickname("cooper")
                 .build();
 
-        assertThat(member.getName()).isEqualTo("cooper");
+        assertThat(member.getNickname()).isEqualTo("cooper");
         assertThat(member.getPassword()).isEqualTo("123");
         assertThat(member.getEmail()).isEqualTo("cooper@rsupport.com");
     }
@@ -28,7 +28,7 @@ class MemberTest {
         assertThrows(
                 IllegalArgumentException.class,
                 () -> Member.builder()
-                        .name("")
+                        .nickname("")
                         .password("123")
                         .email("cooper@rsupport.com")
                         .build(),
@@ -42,9 +42,9 @@ class MemberTest {
         assertThrows(
                 IllegalArgumentException.class,
                 () -> Member.builder()
-                        .name("cooper")
-                        .password("")
                         .email("123@rsupport.com")
+                        .password("")
+                        .nickname("cooper")
                         .build(),
                 "비밀번호가 존재하지 않습니다."
         );
@@ -56,9 +56,9 @@ class MemberTest {
         assertThrows(
                 IllegalArgumentException.class,
                 () -> Member.builder()
-                        .name("cooper")
-                        .password("123")
                         .email("coo@.com")
+                        .password("123")
+                        .nickname("cooper")
                         .build(),
                 "이메일이 올바르지 않습니다."
         );

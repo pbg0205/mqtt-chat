@@ -38,6 +38,6 @@ class MemberControllerTest {
                         .param("password", "123")
                         .param("email", "cooper@rsupport.com"))
                 .andExpect(status().isCreated())
-                .andExpect(view().name("/index"));
+                .andExpect(view().name("index"));
     }
 }

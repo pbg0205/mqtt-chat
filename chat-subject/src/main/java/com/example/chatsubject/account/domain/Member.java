@@ -18,18 +18,19 @@ public class Member {
     @Column(name = "member_id",nullable = false)
     private Long id;
 
-    @Column(name = "member_name",nullable = false, unique = true)
-    private String name;
-
-    @Column(name = "member_email", nullable = false)
+    @Column(name = "member_email", nullable = false, unique = true)
     private String email;
+
+    @Column(name = "member_name",nullable = false)
+    private String nickname;
+
 
     @Column(name = "member_password", nullable = false)
     private String password;
 
     @Builder
-    public Member(String name, String password, String email) {
-        this.name = name;
+    public Member(String nickname, String password, String email) {
+        this.nickname = nickname;
         this.password = password;
         this.email = email;
         validate();
@@ -42,7 +43,7 @@ public class Member {
     }
 
     private void validateName() {
-        if (name == null || name.isEmpty()) {
+        if (nickname == null || nickname.isEmpty()) {
             throw new IllegalArgumentException("이름이 존재하지 않습니다.");
         }
     }
