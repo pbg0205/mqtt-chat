@@ -16,7 +16,7 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class MemberSignUpRequestTest {
+class UserSignUpRequestTest {
 
     private static Validator validator;
 
@@ -31,14 +31,14 @@ class MemberSignUpRequestTest {
     void request_normal_input_values() {
 
         //given
-        MemberSignUpRequest request = new MemberSignUpRequest(
+        UserSignUpRequest request = new UserSignUpRequest(
                 "cooper",
                 "123",
                 "cooper123@rsupport.com"
         );
 
         //when
-        Set<ConstraintViolation<MemberSignUpRequest>> constraintValidations = validator.validate(request);
+        Set<ConstraintViolation<UserSignUpRequest>> constraintValidations = validator.validate(request);
 
         //then
         assertThat(constraintValidations.size()).isZero();
@@ -50,10 +50,10 @@ class MemberSignUpRequestTest {
     void request_normal_input_except_name(String name, String password, String email) {
 
         //given
-        MemberSignUpRequest request = new MemberSignUpRequest(name, password, email);
+        UserSignUpRequest request = new UserSignUpRequest(name, password, email);
 
         //when
-        Set<ConstraintViolation<MemberSignUpRequest>> constraintValidations = validator.validate(request);
+        Set<ConstraintViolation<UserSignUpRequest>> constraintValidations = validator.validate(request);
 
         //then
         assertThat(constraintValidations.size()).isOne();
@@ -73,10 +73,10 @@ class MemberSignUpRequestTest {
     void request_normal_input_except_password(String name, String password, String email) {
 
         //given
-        MemberSignUpRequest request = new MemberSignUpRequest(name, password, email);
+        UserSignUpRequest request = new UserSignUpRequest(name, password, email);
 
         //when
-        Set<ConstraintViolation<MemberSignUpRequest>> constraintValidations = validator.validate(request);
+        Set<ConstraintViolation<UserSignUpRequest>> constraintValidations = validator.validate(request);
 
         //then
         assertThat(constraintValidations.size()).isOne();
@@ -96,10 +96,10 @@ class MemberSignUpRequestTest {
     void request_normal_input_except_email(String name, String password, String email) {
 
         //given
-        MemberSignUpRequest request = new MemberSignUpRequest(name, password, email);
+        UserSignUpRequest request = new UserSignUpRequest(name, password, email);
 
         //when
-        Set<ConstraintViolation<MemberSignUpRequest>> constraintValidations = validator.validate(request);
+        Set<ConstraintViolation<UserSignUpRequest>> constraintValidations = validator.validate(request);
 
         //then
         assertThat(constraintValidations.size()).isOne();

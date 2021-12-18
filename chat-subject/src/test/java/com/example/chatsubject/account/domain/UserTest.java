@@ -6,20 +6,20 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-class MemberTest {
+class UserTest {
 
     @Test
     @DisplayName("이름과 비밀번호, 이메일를 정상 기재했을 경우, 멤버를 생성한다.")
     void createTest() {
-        Member member = Member.builder()
+        User user = User.builder()
                 .password("123")
                 .email("cooper@rsupport.com")
                 .nickname("cooper")
                 .build();
 
-        assertThat(member.getNickname()).isEqualTo("cooper");
-        assertThat(member.getPassword()).isEqualTo("123");
-        assertThat(member.getEmail()).isEqualTo("cooper@rsupport.com");
+        assertThat(user.getNickname()).isEqualTo("cooper");
+        assertThat(user.getPassword()).isEqualTo("123");
+        assertThat(user.getEmail()).isEqualTo("cooper@rsupport.com");
     }
 
     @Test
@@ -27,7 +27,7 @@ class MemberTest {
     void retrieve_illegal_argument_exception_when_name_is_empty() {
         assertThrows(
                 IllegalArgumentException.class,
-                () -> Member.builder()
+                () -> User.builder()
                         .nickname("")
                         .password("123")
                         .email("cooper@rsupport.com")
@@ -41,7 +41,7 @@ class MemberTest {
     void retrieve_illegal_argument_exception_when_password_is_empty() {
         assertThrows(
                 IllegalArgumentException.class,
-                () -> Member.builder()
+                () -> User.builder()
                         .email("123@rsupport.com")
                         .password("")
                         .nickname("cooper")
@@ -55,7 +55,7 @@ class MemberTest {
     void retrieve_illegal_argument_exception_when_input_is_not_email_format() {
         assertThrows(
                 IllegalArgumentException.class,
-                () -> Member.builder()
+                () -> User.builder()
                         .email("coo@.com")
                         .password("123")
                         .nickname("cooper")

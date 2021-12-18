@@ -1,8 +1,8 @@
 package com.example.chatsubject.account.controller;
 
-import com.example.chatsubject.account.dto.MemberSignUpRequest;
-import com.example.chatsubject.account.dto.MemberSignUpResponse;
-import com.example.chatsubject.account.service.MemberService;
+import com.example.chatsubject.account.dto.UserSignUpRequest;
+import com.example.chatsubject.account.dto.UserSignUpResponse;
+import com.example.chatsubject.account.service.UserService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,23 +14,23 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(MemberController.class)
-class MemberControllerTest {
+@WebMvcTest(UserController.class)
+class UserControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    private MemberService memberService;
+    private UserService userService;
 
     @Test
     @DisplayName("회원가입 정상 동작을 테스트한다.")
     void should_return_sign_up_result() throws Exception {
         //given
-        MemberSignUpRequest request = new MemberSignUpRequest("cooper", "123", "cooper@rsupport.com");
-        MemberSignUpResponse response = new MemberSignUpResponse("cooper", "cooper@rsupport.com");
+        UserSignUpRequest request = new UserSignUpRequest("cooper", "123", "cooper@rsupport.com");
+        UserSignUpResponse response = new UserSignUpResponse("cooper", "cooper@rsupport.com");
 
-        when(memberService.signUpMember(request)).thenReturn(response);
+        when(userService.signUpMember(request)).thenReturn(response);
 
         //then
         mockMvc.perform(post("/signup")

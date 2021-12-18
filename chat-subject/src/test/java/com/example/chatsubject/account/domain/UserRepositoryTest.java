@@ -10,28 +10,28 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
-class MemberRepositoryTest {
+class UserRepositoryTest {
 
     @Autowired
     private TestEntityManager testEntityManager;
 
     @Autowired
-    private MemberRepository memberRepository;
+    private UserRepository userRepository;
 
     @Test
     void save_when_arguments_are_normal() {
         //given
-        Member member = Member.builder()
+        User user = User.builder()
                 .email("cooper@rsupport.com")
                 .password("123")
                 .nickname("cooper")
                 .build();
 
         //when
-        Member savedMember = testEntityManager.persist(member);
-        Optional<Member> foundMemberOptional = memberRepository.findById(member.getId());
+        User savedUser = testEntityManager.persist(user);
+        Optional<User> foundMemberOptional = userRepository.findById(user.getId());
 
         //then
-        assertThat(savedMember).isEqualTo(foundMemberOptional.get());
+        assertThat(savedUser).isEqualTo(foundMemberOptional.get());
     }
 }
