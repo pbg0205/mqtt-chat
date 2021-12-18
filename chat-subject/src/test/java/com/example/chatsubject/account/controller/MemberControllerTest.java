@@ -33,7 +33,7 @@ class MemberControllerTest {
         when(memberService.signUpMember(request)).thenReturn(response);
 
         //then
-        mockMvc.perform(post("/sign-up")
+        mockMvc.perform(post("/signup")
                         .param("name", "cooper")
                         .param("password", "123")
                         .param("email", "cooper@rsupport.com"))
