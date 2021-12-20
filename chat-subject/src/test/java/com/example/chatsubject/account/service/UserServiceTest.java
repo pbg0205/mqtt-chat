@@ -9,18 +9,23 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-@SpringBootTest(classes = UserService.class)
+@SpringBootTest(classes = {UserService.class, UserRepository.class})
 class UserServiceTest {
 
     @Autowired
     UserService userService;
 
     @MockBean
-    private UserRepository userRepository;
+    PasswordEncoder passwordEncoder;
+
+    @MockBean
+    UserRepository userRepository;
 
     @Test
     @DisplayName("적절한 입력 값일 경우, 정상 등록한다.")
@@ -29,7 +34,7 @@ class UserServiceTest {
         UserSignUpRequest request
                 = new UserSignUpRequest("sample", "123", "sample@rsupport.com");
         User user = request.toEntity();
-        when(userRepository.save(user)).thenReturn(user);
+        when(userRepository.save(any())).thenReturn(user);
 
         //when
         UserSignUpResponse response = userService.signUpMember(request);
