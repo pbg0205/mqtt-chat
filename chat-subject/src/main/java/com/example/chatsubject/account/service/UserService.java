@@ -7,19 +7,29 @@ import com.example.chatsubject.account.dto.UserSignUpRequest;
 import com.example.chatsubject.account.dto.UserSignUpResponse;
 import com.example.chatsubject.account.exception.DuplicatedUserException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
-public class UserService {
+public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Transactional
     public UserSignUpResponse signUpMember(UserSignUpRequest userSignUpRequest) {
         User user = userSignUpRequest.toEntity();
+        user.encodePassword(passwordEncoder);
+
         validateDuplicatedUser(userSignUpRequest);
+
         User savedUser = userRepository.save(user);
         return UserSignUpResponse.builder()
                 .name(savedUser.getNickname())
@@ -27,9 +37,17 @@ public class UserService {
                 .build();
     }
 
-    private void validateDuplicatedUser(UserSignUpRequest userSignUpRequest) throws DuplicatedUserException {
+    private void validateDuplicatedUser(UserSignUpRequest userSignUpRequest) {
         if (userRepository.existsByEmail(userSignUpRequest.getEmail())) {
             throw new DuplicatedUserException("기존 회원이 존재합니다.");
         }
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.findByEmail(username)
+                .orElseThrow(() -> new UsernameNotFoundException("사용자의 아이디 혹은 비밀번호가 일치하지 않습니다."));
+        log.debug("{}", user);
+        return user;
     }
 }

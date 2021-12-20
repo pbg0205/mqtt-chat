@@ -11,8 +11,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(UserController.class)
 class UserControllerTest {
@@ -34,10 +35,10 @@ class UserControllerTest {
 
         //then
         mockMvc.perform(post("/signup")
-                        .param("name", "cooper")
+                        .param("email", "cooper@rsupport.com")
                         .param("password", "123")
-                        .param("email", "cooper@rsupport.com"))
-                .andExpect(status().isCreated())
-                .andExpect(view().name("index"));
+                        .param("nickname", "cooper")
+                        .with(csrf()))
+                .andExpect(status().is3xxRedirection());
     }
 }
