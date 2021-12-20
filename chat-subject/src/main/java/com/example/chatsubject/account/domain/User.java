@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,8 +19,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @Entity
 @Getter
@@ -32,8 +31,9 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Embedded
     @Column(nullable = false, unique = true)
-    private String email;
+    private Email email;
 
     @Column(nullable = false)
     private String nickname;
@@ -48,7 +48,7 @@ public class User implements UserDetails {
     public User(String nickname, String password, String email) {
         this.nickname = nickname;
         this.password = password;
-        this.email = email;
+        this.email = new Email(email);
         authority = "ROLE_USER";
         validate();
     }
@@ -56,7 +56,6 @@ public class User implements UserDetails {
     private void validate() {
         validateName();
         validatePassword();
-        validateEmail();
     }
 
     private void validateName() {
@@ -71,15 +70,6 @@ public class User implements UserDetails {
         }
     }
 
-    private void validateEmail() {
-        Pattern pattern = Pattern.compile("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$");
-        Matcher matcher = pattern.matcher(email);
-
-        if (!matcher.matches()) {
-            throw new IllegalArgumentException("이메일이 올바르지 않습니다.");
-        }
-    }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Arrays.asList(new SimpleGrantedAuthority(authority));
@@ -87,7 +77,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.email;
+        return email.getEmail();
     }
 
     @Override
@@ -113,5 +103,4 @@ public class User implements UserDetails {
     public void encodePassword(PasswordEncoder passwordEncoder) {
         this.password = passwordEncoder.encode(password);
     }
-
 }
