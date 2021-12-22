@@ -17,14 +17,14 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 public class UserSignUpRequest {
 
-    @NotBlank
+    @NotBlank(message = "닉네임은 필수값 입니다.")
     private String nickname;
 
-    @NotBlank
+    @NotBlank(message = "비밀번호는 필수값 입니다.")
     private String password;
 
-    @Email
-    @NotBlank
+    @Email(message = "이메일 형식으로 입력 해주세요.")
+    @NotBlank(message = "이메일는 필수값 입니다.")
     private String email;
 
     public User toEntity() {
