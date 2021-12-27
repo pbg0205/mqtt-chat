@@ -7,20 +7,36 @@
 </head>
 <body>
 <h1>회원 가입</h1>
-<form name="sign-up" th:action="@{/signup}" method="post">
+<form name="sign-up" method="post" th:object="${userSignUpRequest}" th:action="@{/signup}">
     <div>
         <label>
-            id(Email) : <input type="email" th:name="email">
+            id(Email) : <input type="email" name="email" th:field="*{email}">
+        </label>
+        <label th:if="${#fields.hasErrors('email')}" th:erros="*{email}">
+            <ul>
+                <li th:each="err : ${#fields.errors('email')}" th:text="${err}"></li>
+            </ul>
         </label>
     </div>
     <div>
         <label>
-            pw : <input type="password" th:name="password">
+            pw : <input type="password" name="password" th:field="*{password}">
         </label>
+        <label th:if="${#fields.hasErrors('password')}" th:erros="*{password}">
+            <ul>
+                <li th:each="err : ${#fields.errors('password')}" th:text="${err}"></li>
+            </ul>
+        </label>
+
     </div>
     <div>
         <label>
-            nickname: <input type="text" th:name="nickname">
+            nickname: <input type="text" name="nickname" th:field="*{nickname}">
+        </label>
+        <label th:if="${#fields.hasErrors('nickname')}" th:erros="*{nickname}">
+            <ul>
+                <li th:each="err : ${#fields.errors('nickname')}" th:text="${err}"></li>
+            </ul>
         </label>
     </div>
 

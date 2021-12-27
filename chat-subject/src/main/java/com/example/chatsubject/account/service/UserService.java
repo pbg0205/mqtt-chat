@@ -33,7 +33,7 @@ public class UserService implements UserDetailsService {
         User savedUser = userRepository.save(user);
         return UserSignUpResponse.builder()
                 .name(savedUser.getNickname())
-                .email(savedUser.getEmail())
+                .email(savedUser.getEmail().getEmail())
                 .build();
     }
 

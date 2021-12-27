@@ -19,7 +19,7 @@ class UserTest {
 
         assertThat(user.getNickname()).isEqualTo("cooper");
         assertThat(user.getPassword()).isEqualTo("123");
-        assertThat(user.getEmail()).isEqualTo("cooper@rsupport.com");
+        assertThat(user.getEmail()).isEqualTo(new Email("cooper@rsupport.com"));
     }
 
     @Test

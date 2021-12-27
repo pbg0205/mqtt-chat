@@ -8,11 +8,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.view.RedirectView;
+
+import javax.validation.Valid;
 
 @Slf4j
 @Controller
@@ -22,7 +24,8 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping(value = "/signup")
-    public String signUpForm() {
+    public String signUpForm(Model model) {
+        model.addAttribute("userSignUpRequest", new UserSignUpRequest());
         return "signup";
     }
 
@@ -32,10 +35,14 @@ public class UserController {
     }
 
     @PostMapping(value = "/signup")
-    public RedirectView signUp(@ModelAttribute UserSignUpRequest userSignUpRequest) {
+    public String signUp(@Valid @ModelAttribute UserSignUpRequest userSignUpRequest,
+                         BindingResult result) {
+        if (result.hasErrors()) {
+            return "signup";
+        }
         UserSignUpResponse userSignUpResponse = userService.signUpMember(userSignUpRequest);
         log.debug("{}", userSignUpResponse);
-        return new RedirectView("/login");
+        return "redirect:/login";
     }
 
     @ExceptionHandler(DuplicatedUserException.class)
