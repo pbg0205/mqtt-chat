@@ -1,7 +1,6 @@
 package com.example.chatsubject.account.controller;
 
 import com.example.chatsubject.account.dto.UserSignUpRequest;
-import com.example.chatsubject.account.dto.UserSignUpResponse;
 import com.example.chatsubject.account.exception.DuplicatedUserException;
 import com.example.chatsubject.account.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -35,13 +34,12 @@ public class UserController {
     }
 
     @PostMapping(value = "/signup")
-    public String signUp(@Valid @ModelAttribute UserSignUpRequest userSignUpRequest,
-                         BindingResult result) {
+    public String signUp(@ModelAttribute @Valid UserSignUpRequest userSignUpRequest, BindingResult result) {
         if (result.hasErrors()) {
             return "signup";
         }
-        UserSignUpResponse userSignUpResponse = userService.signUpMember(userSignUpRequest);
-        log.debug("{}", userSignUpResponse);
+
+        userService.signUpMember(userSignUpRequest);
         return "redirect:/login";
     }
 
