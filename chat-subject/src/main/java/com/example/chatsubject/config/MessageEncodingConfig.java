@@ -8,7 +8,7 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-public class MessageConfig implements WebMvcConfigurer {
+public class MessageEncodingConfig implements WebMvcConfigurer {
 
     @Bean
     public LocalValidatorFactoryBean validator() {
