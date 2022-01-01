@@ -16,15 +16,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .mvcMatchers("/", "/signup")
-                .permitAll();
+                .mvcMatchers("/", "/signup").permitAll()
+                .mvcMatchers("/chat/**").authenticated();
 
         http.formLogin()
                 .loginPage("/login")
                 .loginProcessingUrl("/login")
                 .usernameParameter("username")
                 .passwordParameter("password")
-                .defaultSuccessUrl("/")
+                .defaultSuccessUrl("/chat/rooms")
                 .permitAll();
 
         http.logout()
