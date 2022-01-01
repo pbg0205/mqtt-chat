@@ -4,6 +4,7 @@ package com.example.chatsubject.account.service;
 import com.example.chatsubject.account.domain.Email;
 import com.example.chatsubject.account.domain.User;
 import com.example.chatsubject.account.domain.UserRepository;
+import com.example.chatsubject.account.dto.UserDetailsResponse;
 import com.example.chatsubject.account.dto.UserSignUpRequest;
 import com.example.chatsubject.account.dto.UserSignUpResponse;
 import com.example.chatsubject.account.exception.DuplicatedUserException;
@@ -48,8 +49,14 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(new Email(username))
-                .orElseThrow(() -> new UsernameNotFoundException("사용자의 아이디 혹은 비밀번호가 일치하지 않습니다."));
+                .orElseThrow(() -> new UsernameNotFoundException("사용자의 정보가 일치하지 않습니다."));
         log.debug("{}", user);
         return user;
+    }
+
+    public UserDetailsResponse findByEmail(String email) {
+        User user = userRepository.findByEmail(new Email(email))
+                .orElseThrow(() -> new UsernameNotFoundException("사용자의 정보가 일치하지 않습니다."));
+        return UserDetailsResponse.from(user);
     }
 }

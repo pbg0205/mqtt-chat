@@ -1,5 +1,7 @@
 package com.example.chatsubject.chat.controller;
 
+import com.example.chatsubject.account.dto.UserDetailsResponse;
+import com.example.chatsubject.account.service.UserService;
 import com.example.chatsubject.chat.dto.ChatRoomDetailsResponse;
 import com.example.chatsubject.chat.dto.ChatRoomLookupResponse;
 import com.example.chatsubject.chat.service.ChatRoomService;
@@ -10,8 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.security.Principal;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 @Controller
 @RequiredArgsConstructor
@@ -19,7 +21,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class ChatRoomsController {
 
     private final ChatRoomService chatRoomService;
-    private final AtomicInteger sequence = new AtomicInteger(0);
+    private final UserService userService;
 
     @GetMapping
     public String getChatRoomListPage() {
@@ -34,10 +36,12 @@ public class ChatRoomsController {
     }
 
     @GetMapping(value = "/rooms/{id}")
-    public String joinRoom(@PathVariable String id, Model model) {
+    public String joinRoom(@PathVariable String id, Model model, Principal principal) {
         ChatRoomDetailsResponse chatRoomDetailsResponse = chatRoomService.findById(id);
         model.addAttribute("room", chatRoomDetailsResponse);
-        model.addAttribute("member", "member" + sequence.incrementAndGet());
+
+        UserDetailsResponse userDetailsResponse = userService.findByEmail(principal.getName());
+        model.addAttribute("member", userDetailsResponse.getNickname());
         return "chatroom-detail";
     }
 
