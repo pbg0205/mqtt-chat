@@ -2,6 +2,7 @@ package com.example.chatsubject.chat.service;
 
 import com.example.chatsubject.chat.domain.ChatRoom;
 import com.example.chatsubject.chat.domain.ChatRoomRepository;
+import com.example.chatsubject.chat.dto.ChatRoomDetailsResponse;
 import com.example.chatsubject.chat.dto.ChatRoomLookupResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,11 @@ public class ChatRoomService {
         return chatRoomList.stream()
                 .map(ChatRoomLookupResponse::from)
                 .collect(Collectors.toList());
+    }
+
+    public ChatRoomDetailsResponse findById(String id) {
+        ChatRoom chatRoom = chatRoomRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+        return ChatRoomDetailsResponse.from(chatRoom);
     }
 
     @PostConstruct

@@ -17,8 +17,6 @@ public class ChatRoom {
 
     private final String name;
 
-    private final Set<WebSocketSession> sessions = new HashSet<>();
-
     public ChatRoom(String name) {
         this.name = name;
     }
