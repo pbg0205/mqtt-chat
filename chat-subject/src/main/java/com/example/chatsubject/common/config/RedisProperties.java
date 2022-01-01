@@ -1,4 +1,4 @@
-package com.example.chatsubject.config;
+package com.example.chatsubject.common.config;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

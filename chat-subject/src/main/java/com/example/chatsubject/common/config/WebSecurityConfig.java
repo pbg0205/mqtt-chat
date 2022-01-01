@@ -1,4 +1,4 @@
-package com.example.chatsubject.config;
+package com.example.chatsubject.common.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
