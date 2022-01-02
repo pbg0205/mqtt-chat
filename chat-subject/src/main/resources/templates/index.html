@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Index</title>
@@ -10,7 +11,7 @@
     회원 가입
 </a>
 <br>
-<a th:href="@{/login}">
+<a sec:authorize="!isAuthenticated()" th:href="@{/login}">
     로그인
 </a>
 </body>
