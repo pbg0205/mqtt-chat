@@ -9,7 +9,7 @@
 </head>
 <body>
 <h1 th:text="${room.name}"></h1>
-<h2 th:text="${member}"></h2>
+<h2 th:text="${member.getNickname()}"></h2>
 <div class="content" data-room-id="{{room.id}}" data-member="{{member}}">
     <ul class="chat_box">
     </ul>
@@ -24,7 +24,7 @@
         let messageInput = $('input[name=message]');
         let sendBtn = $('.send');
         let roomId = '[[${room.id}]]';
-        let member = '[[${member}]]';
+        let member = '[[${member.getNickname()}]]';
 
         let sock = new SockJS("/stomp-chat");
         let client = Stomp.over(sock);

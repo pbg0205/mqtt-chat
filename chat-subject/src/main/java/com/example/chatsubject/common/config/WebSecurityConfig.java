@@ -1,5 +1,6 @@
 package com.example.chatsubject.common.config;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -11,13 +12,16 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    private final AuthProvider authProvider;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .mvcMatchers("/", "/signup").permitAll()
-                .mvcMatchers("/chat/**").authenticated();
+                .mvcMatchers("/chat/*").authenticated();
 
         http.formLogin()
                 .loginPage("/login")

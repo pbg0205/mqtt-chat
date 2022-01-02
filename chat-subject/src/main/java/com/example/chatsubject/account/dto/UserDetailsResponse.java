@@ -3,8 +3,10 @@ package com.example.chatsubject.account.dto;
 import com.example.chatsubject.account.domain.User;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 
 @Getter
+@ToString
 @RequiredArgsConstructor
 public class UserDetailsResponse {
 
