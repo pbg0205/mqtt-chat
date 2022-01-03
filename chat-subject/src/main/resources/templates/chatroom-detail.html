@@ -9,7 +9,7 @@
 </head>
 <body>
 <h1 th:text="${room.name}"></h1>
-<h2 th:text="${member}"></h2>
+<h2 th:text="${member.getNickname()}"></h2>
 <div class="content" data-room-id="{{room.id}}" data-member="{{member}}">
     <ul class="chat_box">
     </ul>
@@ -24,24 +24,47 @@
         let messageInput = $('input[name=message]');
         let sendBtn = $('.send');
         let roomId = '[[${room.id}]]';
-        let member = '[[${member}]]';
+        let member = '[[${member.getNickname()}]]';
 
-        let sock = new SockJS("/stomp-chat");
+        let endpoint = "/stomp-chat";
+        let sock = new SockJS(endpoint);
         let client = Stomp.over(sock);
         client.debug = function (e) {
         };
 
         client.connect({}, function () {
-            client.send('/publish/chat/join', {}, JSON.stringify({chatRoomId: roomId, type: 'JOIN', writer: member}));
-            client.subscribe('/subscribe/chat/room/' + roomId, function (chat) {
-                let content = JSON.parse(chat.body);
-                chatBox.append('<li>' + '(' + content.writer + ')' + content.message + '</li>')
-            });
+            client.send(
+                '/publish/chat/join',
+                {},
+                JSON.stringify({
+                    chatRoomId: roomId,
+                    type: 'JOIN',
+                    writer: member
+                })
+            );
+
+            client.subscribe(
+                '/subscribe/chat/room/' + roomId,
+                function (chat) {
+                    let content = JSON.parse(chat.body);
+                    chatBox.append('<li>' + '(' + content.writer + ')' + content.message + '</li>')
+                }
+            );
         });
 
         sendBtn.click(function () {
             let message = messageInput.val();
-            client.send('/publish/chat/message', {}, JSON.stringify({chatRoomId: roomId, type: 'CHAT', message: message, writer: member}));
+            client.send(
+                '/publish/chat/message',
+                {},
+                JSON.stringify({
+                    chatRoomId: roomId,
+                    type: 'CHAT',
+                    message: message,
+                    writer: member
+                })
+            );
+
             messageInput.val('');
         });
     });

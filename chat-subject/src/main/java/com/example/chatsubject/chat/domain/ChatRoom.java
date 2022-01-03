@@ -1,21 +1,23 @@
 package com.example.chatsubject.chat.domain;
 
 import lombok.Getter;
-import org.springframework.data.redis.core.RedisHash;
 
-import javax.persistence.Id;
+import java.util.UUID;
 
 @Getter
-@RedisHash("ChatRoom")
 public class ChatRoom {
 
-    @Id
-    private String id;
+    private final String id;
 
     private final String name;
 
     public ChatRoom(String name) {
+        this.id = generateId();
         this.name = name;
+    }
+
+    private String generateId() {
+        return UUID.randomUUID().toString().substring(0, 8);
     }
 
 }

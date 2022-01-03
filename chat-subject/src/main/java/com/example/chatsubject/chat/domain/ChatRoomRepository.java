@@ -1,11 +1,16 @@
 package com.example.chatsubject.chat.domain;
 
-import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
+import java.util.Optional;
 
-public interface ChatRoomRepository extends CrudRepository<ChatRoom, String> {
+public interface ChatRoomRepository {
 
     List<ChatRoom> findAll();
 
+    Optional<ChatRoom> findById(String id);
+
+    void deleteAll();
+
+    ChatRoom save(ChatRoom chatRoom);
 }
