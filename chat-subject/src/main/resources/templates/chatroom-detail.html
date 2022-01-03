@@ -26,7 +26,8 @@
         let roomId = '[[${room.id}]]';
         let member = '[[${member.getNickname()}]]';
 
-        let sock = new SockJS("/stomp-chat");
+        let endpoint = "/stomp-chat";
+        let sock = new SockJS(endpoint);
         let client = Stomp.over(sock);
         client.debug = function (e) {
         };
