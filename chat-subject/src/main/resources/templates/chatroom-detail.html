@@ -32,16 +32,38 @@
         };
 
         client.connect({}, function () {
-            client.send('/publish/chat/join', {}, JSON.stringify({chatRoomId: roomId, type: 'JOIN', writer: member}));
-            client.subscribe('/subscribe/chat/room/' + roomId, function (chat) {
-                let content = JSON.parse(chat.body);
-                chatBox.append('<li>' + '(' + content.writer + ')' + content.message + '</li>')
-            });
+            client.send(
+                '/publish/chat/join',
+                {},
+                JSON.stringify({
+                    chatRoomId: roomId,
+                    type: 'JOIN',
+                    writer: member
+                })
+            );
+
+            client.subscribe(
+                '/subscribe/chat/room/' + roomId,
+                function (chat) {
+                    let content = JSON.parse(chat.body);
+                    chatBox.append('<li>' + '(' + content.writer + ')' + content.message + '</li>')
+                }
+            );
         });
 
         sendBtn.click(function () {
             let message = messageInput.val();
-            client.send('/publish/chat/message', {}, JSON.stringify({chatRoomId: roomId, type: 'CHAT', message: message, writer: member}));
+            client.send(
+                '/publish/chat/message',
+                {},
+                JSON.stringify({
+                    chatRoomId: roomId,
+                    type: 'CHAT',
+                    message: message,
+                    writer: member
+                })
+            );
+
             messageInput.val('');
         });
     });
