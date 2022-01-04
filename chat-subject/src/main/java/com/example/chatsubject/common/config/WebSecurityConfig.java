@@ -16,8 +16,6 @@ import org.thymeleaf.extras.springsecurity5.dialect.SpringSecurityDialect;
 @RequiredArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final AuthProvider authProvider;
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
@@ -42,8 +40,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
-    @Bean
-    public SpringSecurityDialect springSecurityDialect(){
-        return new SpringSecurityDialect();
-    }
 }
