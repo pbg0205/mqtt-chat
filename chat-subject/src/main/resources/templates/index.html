@@ -11,8 +11,14 @@
     회원 가입
 </a>
 <br>
-<a sec:authorize="!isAuthenticated()" th:href="@{/login}">
-    로그인
-</a>
+<form th:action="@{/login}" method = "GET" sec:authorize="!isAuthenticated()">
+    <button type = "submit"> 로그인</button>
+</form>
+
+<form th:action="@{logout}" method = "POST" sec:authorize="isAuthenticated()">
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+    <button type = "submit"> 로그아웃</button>
+</form>
+
 </body>
 </html>
