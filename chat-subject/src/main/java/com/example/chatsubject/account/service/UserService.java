@@ -9,9 +9,6 @@ import com.example.chatsubject.account.dto.UserSignUpResponse;
 import com.example.chatsubject.account.exception.DuplicatedUserException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class UserService implements UserDetailsService {
+public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -45,11 +42,4 @@ public class UserService implements UserDetailsService {
         }
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByEmail(new Email(username))
-                .orElseThrow(() -> new UsernameNotFoundException("사용자의 아이디 혹은 비밀번호가 일치하지 않습니다."));
-        log.debug("{}", user);
-        return user;
-    }
 }
