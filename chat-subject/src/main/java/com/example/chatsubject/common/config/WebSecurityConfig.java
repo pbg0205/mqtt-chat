@@ -23,9 +23,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.formLogin()
                 .loginPage("/login")
-                .loginProcessingUrl("/login")
-                .usernameParameter("username")
-                .passwordParameter("password")
                 .defaultSuccessUrl("/chat/rooms")
                 .permitAll();
 
@@ -33,6 +30,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/")
                 .deleteCookies("JSESSIONID")
                 .permitAll();
+
+        http.sessionManagement()
+                .maximumSessions(1)
+                .maxSessionsPreventsLogin(false);
     }
 
     @Bean
