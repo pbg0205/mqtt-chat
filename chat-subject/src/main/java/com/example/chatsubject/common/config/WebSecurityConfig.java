@@ -32,8 +32,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll();
 
         http.sessionManagement()
-                .maximumSessions(1)
-                .maxSessionsPreventsLogin(false);
+                .maximumSessions(1);
     }
 
     @Bean
