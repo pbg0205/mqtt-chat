@@ -25,7 +25,7 @@ import java.util.Collections;
 @ToString
 @Table(name = "users")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class User implements UserDetails {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,7 +44,7 @@ public class User implements UserDetails {
     private String authority;
 
     @Builder
-    public User(String nickname, String password, String email) {
+    User(String nickname, String password, String email) {
         this.nickname = nickname;
         this.password = password;
         this.email = new Email(email);
@@ -55,33 +55,4 @@ public class User implements UserDetails {
         this.password = passwordEncoder.encode(password);
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singletonList(new SimpleGrantedAuthority(authority));
-    }
-
-    @Override
-    public String getUsername() {
-        return email.getEmail();
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
 }
