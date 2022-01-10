@@ -6,8 +6,10 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collections;
 import java.util.List;
 
 @Getter
@@ -23,13 +25,12 @@ public class UserDetailsResponse implements UserDetails {
 
     public static UserDetailsResponse from(User user) {
         return new UserDetailsResponse(
-                user.getUsername(),
+                user.getEmail().getEmail(),
                 user.getPassword(),
                 user.getNickname(),
-                (List<GrantedAuthority>) user.getAuthorities()
+                Collections.singletonList(new SimpleGrantedAuthority(user.getAuthority()))
         );
     }
-
 
     @Override
     public String getUsername() {
