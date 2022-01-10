@@ -3,7 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <title th:text="${room.name}"></title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.js" type="text/javascript"></script>
     <script src="/webjars/jquery/3.6.0/jquery.min.js"></script>
+    <script type="text/javascript">
+        let host = location.hostname;
+        let port = Number(9001);
+        let clientId = "clientId";
+        let client = new Paho.MQTT.Client(host, port, clientId);
+        $(function () {
+            /* mqtt connection options */
+            let options = {
+                timeout: 3,
+                onSuccess: onConnect,
+                onFailure: onFail
+            }
+
+            client.connect(options);
+            client.onConnectd = onConnected;
+            client.onMessageArrived = onMessageArrived;
+
+            function onConnect() {
+                console.log(host + " is Connected");
+
+                client.subscribe("topic");
+            }
+
+            function onFail() {
+                console.log(host + "'s connection is failed");
+            }
+
+            function onConnected() {
+                client.subscribe('topic');
+            }
+
+            function onMessageArrived(receivedMessage) {
+                console.log(receivedMessage);
+            }
+
+            /* html component 작동*/
+            let chatBox = $('.chat_box')[0];
+            let messageInput = $('input[name=message]');
+            let sendBtn = $('.send');
+
+            sendBtn.click(function () {
+                let message = messageInput.val();
+
+                chatBox.append(`<li>` + message + `</li>`);
+                messageInput.val('');
+            });
+        });
+    </script>
 </head>
 <body>
 <h1 th:text="${room.name}"></h1>
