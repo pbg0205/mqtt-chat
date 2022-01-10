@@ -30,6 +30,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/")
                 .deleteCookies("JSESSIONID")
                 .permitAll();
+
+        http.sessionManagement()
+                .maximumSessions(1)
+                .maxSessionsPreventsLogin(false);
     }
 
     @Bean

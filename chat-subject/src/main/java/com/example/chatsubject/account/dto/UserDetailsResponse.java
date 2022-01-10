@@ -1,6 +1,7 @@
 package com.example.chatsubject.account.dto;
 
 import com.example.chatsubject.account.domain.User;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
@@ -12,6 +13,7 @@ import java.util.List;
 @Getter
 @ToString
 @RequiredArgsConstructor
+@EqualsAndHashCode(of= {"email"})
 public class UserDetailsResponse implements UserDetails {
 
     private final String email;
