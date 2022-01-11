@@ -1,23 +1,27 @@
 package com.example.chatsubject.chat.domain;
 
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-import java.util.UUID;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Getter
+@Entity
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ChatRoom {
 
-    private final String id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    private final String name;
+    private String name;
 
     public ChatRoom(String name) {
-        this.id = generateId();
         this.name = name;
-    }
-
-    private String generateId() {
-        return UUID.randomUUID().toString().substring(0, 8);
     }
 
 }

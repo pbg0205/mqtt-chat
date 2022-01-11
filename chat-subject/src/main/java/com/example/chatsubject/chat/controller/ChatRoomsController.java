@@ -34,14 +34,11 @@ public class ChatRoomsController {
     }
 
     @GetMapping(value = "/rooms/{id}")
-    public String joinRoom(
-            @AuthenticationPrincipal UserDetailsResponse userDetailsResponse,
-            @PathVariable String id,
-            Model model
-    ) {
+    public String joinRoom(@AuthenticationPrincipal UserDetailsResponse userDetailsResponse,
+                           @PathVariable Long id,
+                           Model model) {
         ChatRoomDetailsResponse chatRoomDetailsResponse = chatRoomService.findById(id);
         model.addAttribute("room", chatRoomDetailsResponse);
-
         model.addAttribute("member", userDetailsResponse);
         return "chatroom-detail";
     }
