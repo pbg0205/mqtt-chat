@@ -1,6 +1,7 @@
 package com.example.chatsubject.chat.integration;
 
 import com.example.chatsubject.chat.config.MqttConnectionProperties;
+import com.example.chatsubject.chat.config.MqttInboundAdapterProperties;
 import com.example.chatsubject.chat.domain.ChatMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -17,6 +18,7 @@ import org.springframework.messaging.MessageHandler;
 public class MqttIntegrationConfig {
 
     private final MqttConnectionProperties connectionProperties;
+    private final MqttInboundAdapterProperties inboundAdapterProperties;
 
     @Bean
     public IntegrationFlow chatMessageSaveFlow() {
@@ -33,9 +35,9 @@ public class MqttIntegrationConfig {
                 connectionProperties.getClientId(),
                 connectionProperties.getTopicFilter());
 
-        channelAdapter.setCompletionTimeout(5000);
+        channelAdapter.setCompletionTimeout(inboundAdapterProperties.getCompletionTimeOut());
         channelAdapter.setConverter(new DefaultPahoMessageConverter());
-        channelAdapter.setQos(1);
+        channelAdapter.setQos(inboundAdapterProperties.getQos());
         return channelAdapter;
     }
 
