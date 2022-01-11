@@ -6,12 +6,12 @@ import com.example.chatsubject.chat.domain.ChatMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.integration.channel.NullChannel;
 import org.springframework.integration.dsl.IntegrationFlow;
 import org.springframework.integration.dsl.IntegrationFlows;
 import org.springframework.integration.dsl.Transformers;
 import org.springframework.integration.mqtt.inbound.MqttPahoMessageDrivenChannelAdapter;
 import org.springframework.integration.mqtt.support.DefaultPahoMessageConverter;
-import org.springframework.messaging.MessageHandler;
 
 @Configuration
 @RequiredArgsConstructor
@@ -24,7 +24,10 @@ public class MqttIntegrationConfig {
     public IntegrationFlow chatMessageSaveFlow() {
         return IntegrationFlows.from(inboundChannel())
                 .transform(Transformers.fromJson(ChatMessage.class))
-                .handle(chatMessageSaveHandler())
+                .<ChatMessage>handle((payload, headers) -> {
+                    System.out.println(payload);
+                    return payload;
+                }).channel(new NullChannel())
                 .get();
     }
 
@@ -41,8 +44,4 @@ public class MqttIntegrationConfig {
         return channelAdapter;
     }
 
-    @Bean
-    public MessageHandler chatMessageSaveHandler() {
-        return message -> System.out.println(message.getPayload());
-    }
 }
