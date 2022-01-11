@@ -32,7 +32,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll();
 
         http.sessionManagement()
-                .maximumSessions(1);
+                .maximumSessions(1)
+                .expiredUrl("/expired_session");
     }
 
     @Bean
