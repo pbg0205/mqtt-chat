@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ChatRoomDetailsResponse {
 
-    private final String id;
+    private final Long id;
     private final String name;
 
     public static ChatRoomDetailsResponse from(ChatRoom chatRoom) {
