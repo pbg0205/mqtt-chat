@@ -15,26 +15,26 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ChatRoomService {
 
-    private final ChatRoomRepository chatRoomRepositoryImpl;
+    private final ChatRoomRepository chatRoomRepository;
 
     public List<ChatRoomLookupResponse> getChatRoomList() {
-        List<ChatRoom> chatRoomList = chatRoomRepositoryImpl.findAll();
+        List<ChatRoom> chatRoomList = chatRoomRepository.findAll();
         return chatRoomList.stream()
                 .map(ChatRoomLookupResponse::from)
                 .collect(Collectors.toList());
     }
 
-    public ChatRoomDetailsResponse findById(String id) {
-        ChatRoom chatRoom = chatRoomRepositoryImpl.findById(id).orElseThrow(IllegalArgumentException::new);
+    public ChatRoomDetailsResponse findById(Long id) {
+        ChatRoom chatRoom = chatRoomRepository.findById(id).orElseThrow(IllegalArgumentException::new);
         return ChatRoomDetailsResponse.from(chatRoom);
     }
 
     @PostConstruct
     private void postConstruct() {
-        chatRoomRepositoryImpl.deleteAll();
-        chatRoomRepositoryImpl.save(new ChatRoom("채팅방1"));
-        chatRoomRepositoryImpl.save(new ChatRoom("채팅방2"));
-        chatRoomRepositoryImpl.save(new ChatRoom("채팅방3"));
+        chatRoomRepository.deleteAll();
+        chatRoomRepository.save(new ChatRoom("채팅방1"));
+        chatRoomRepository.save(new ChatRoom("채팅방2"));
+        chatRoomRepository.save(new ChatRoom("채팅방3"));
     }
 
 }
