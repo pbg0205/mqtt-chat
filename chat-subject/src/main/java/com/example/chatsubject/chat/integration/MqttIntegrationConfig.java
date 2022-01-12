@@ -2,7 +2,8 @@ package com.example.chatsubject.chat.integration;
 
 import com.example.chatsubject.chat.config.MqttConnectionProperties;
 import com.example.chatsubject.chat.config.MqttInboundAdapterProperties;
-import com.example.chatsubject.chat.domain.ChatMessage;
+import com.example.chatsubject.chat.dto.ChatMessageSaveRequest;
+import com.example.chatsubject.chat.service.ChatMessageSaveService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,13 +20,14 @@ public class MqttIntegrationConfig {
 
     private final MqttConnectionProperties connectionProperties;
     private final MqttInboundAdapterProperties inboundAdapterProperties;
+    private final ChatMessageSaveService chatMessageSaveService;
 
     @Bean
     public IntegrationFlow chatMessageSaveFlow() {
         return IntegrationFlows.from(inboundChannel())
-                .transform(Transformers.fromJson(ChatMessage.class))
-                .<ChatMessage>handle((payload, headers) -> {
-                    System.out.println(payload);
+                .transform(Transformers.fromJson(ChatMessageSaveRequest.class))
+                .<ChatMessageSaveRequest>handle((payload, headers) -> {
+                    chatMessageSaveService.save(payload);
                     return payload;
                 }).channel(new NullChannel())
                 .get();
