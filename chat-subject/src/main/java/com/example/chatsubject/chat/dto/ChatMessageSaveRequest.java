@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ChatMessageSaveRequest {
 
-    private Long writerId;
+    private String writerName;
 
     private String message;
 
@@ -27,7 +27,7 @@ public class ChatMessageSaveRequest {
 
     public ChatMessage toEntity() {
         return ChatMessage.builder()
-                .writerId(writerId)
+                .writerName(writerName)
                 .message(message)
                 .messageType(messageType)
                 .createAt(createAt)
