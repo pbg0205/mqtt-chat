@@ -2,12 +2,14 @@ package com.example.chatsubject.chat.service;
 
 import com.example.chatsubject.chat.domain.ChatRoom;
 import com.example.chatsubject.chat.domain.ChatRoomRepository;
+import com.example.chatsubject.chat.dto.ChatMessageLookUpResponse;
 import com.example.chatsubject.chat.dto.ChatRoomDetailsResponse;
 import com.example.chatsubject.chat.dto.ChatRoomLookupResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,7 +28,11 @@ public class ChatRoomService {
 
     public ChatRoomDetailsResponse findById(Long id) {
         ChatRoom chatRoom = chatRoomRepository.findById(id).orElseThrow(IllegalArgumentException::new);
-        return ChatRoomDetailsResponse.from(chatRoom);
+        List<ChatMessageLookUpResponse> chatMessageLookUpResponses = chatRoom.getChatMessages().stream()
+                .map(ChatMessageLookUpResponse::fromEntity)
+                .sorted(Comparator.comparing(ChatMessageLookUpResponse::getCreatedAt))
+                .collect(Collectors.toList());
+        return ChatRoomDetailsResponse.from(chatRoom, chatMessageLookUpResponses);
     }
 
     @PostConstruct

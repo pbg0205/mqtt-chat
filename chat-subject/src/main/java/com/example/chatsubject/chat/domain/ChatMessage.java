@@ -37,7 +37,7 @@ public class ChatMessage {
     private String message;
 
     @Column(name = "chat_message_writer_id")
-    private Long writerId;
+    private String writerName;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "chat_message_message_type")
@@ -51,11 +51,11 @@ public class ChatMessage {
     private ChatRoom chatRoom;
 
     @Builder
-    public ChatMessage(Long writerId,
+    public ChatMessage(String writerName,
                        String message,
                        MessageType messageType,
                        LocalDateTime createAt) {
-        this.writerId = writerId;
+        this.writerName = writerName;
         this.message = message;
         this.messageType = messageType;
         this.createAt = createAt;
