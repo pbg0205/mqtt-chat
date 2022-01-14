@@ -9,7 +9,9 @@
 <h1 th:text="${room.name}"></h1>
 <h2 th:text="${member.getNickname()}"></h2>
 <div class="content" data-room-id="{{room.id}}" data-member="{{member}}">
-    <ul class="chat_box">
+    <!--/*@thymesVar id="chatMessageLookUpResponseList" type=""*/-->
+    <ul class="chat_box" th:each="room:${chatMessageLookUpResponseList}">
+        <li th:text="'(' + '${writerName}' +') : ' + '${message}'"></li>
     </ul>
     <label>
         <input name="message">
