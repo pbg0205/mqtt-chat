@@ -21,7 +21,7 @@ public class ChatMessageSaveRequest {
     @Enumerated(EnumType.STRING)
     private MessageType messageType;
 
-    private LocalDateTime createAt;
+    private LocalDateTime createdAt;
 
     private Long chatRoomId;
 
@@ -30,7 +30,7 @@ public class ChatMessageSaveRequest {
                 .writerName(writerName)
                 .message(message)
                 .messageType(messageType)
-                .createAt(createAt)
+                .createAt(createdAt)
                 .build();
     }
 
