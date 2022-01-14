@@ -36,7 +36,7 @@ public class ChatMessage {
     @Column(name = "chat_message_message")
     private String message;
 
-    @Column(name = "chat_message_writer_id")
+    @Column(name = "chat_message_writer_name")
     private String writerName;
 
     @Enumerated(EnumType.STRING)
