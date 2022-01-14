@@ -13,6 +13,6 @@ public class MqttConnectionProperties {
 
     private final String brokerUrl;
     private final String clientId;
-    private final String topicFilter;
+    private final String[] topicFilter;
 
 }
