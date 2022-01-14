@@ -49,9 +49,11 @@
         client.connect(options);
         client.onMessageArrived = onMessageArrived;
 
+        let topic = "topic" + roomId;
+
         function onConnect() {
             console.log(host + " is Connected");
-            client.subscribe("topic");
+            client.subscribe(topic);
 
             let previousContents = '${room.chatMessageLookUpResponseList}';
         }
@@ -79,7 +81,7 @@
                 createdAt: new Date(),
                 writerName: member
             });
-            client.send("topic", content);
+            client.send(topic, content);
             messageInput.val('');
         });
     });
