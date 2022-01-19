@@ -15,9 +15,10 @@ public class ChatRoomDetailsResponse {
     private final String name;
     private final List<ChatMessageLookUpResponse> chatMessageLookUpResponseList;
 
-    public static ChatRoomDetailsResponse fromEntity(ChatRoom chatRoom,
+    public static ChatRoomDetailsResponse fromEntity(Long chatRoomId,
+                                                     String chatRoomName,
                                                      List<ChatMessageLookUpResponse> responseList) {
-        return new ChatRoomDetailsResponse(chatRoom.getId(), chatRoom.getName(), responseList);
+        return new ChatRoomDetailsResponse(chatRoomId, chatRoomName, responseList);
     }
 
 }
