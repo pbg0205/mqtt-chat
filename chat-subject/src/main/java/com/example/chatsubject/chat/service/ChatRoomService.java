@@ -1,5 +1,6 @@
 package com.example.chatsubject.chat.service;
 
+import com.example.chatsubject.chat.domain.ChatMessage;
 import com.example.chatsubject.chat.domain.ChatRoom;
 import com.example.chatsubject.chat.domain.ChatRoomRepository;
 import com.example.chatsubject.chat.dto.ChatMessageLookUpResponse;
@@ -30,11 +31,16 @@ public class ChatRoomService {
 
     public ChatRoomDetailsResponse getChatRoomDetails(Long id) {
         ChatRoom chatRoom = chatRoomRepository.findById(id).orElseThrow(IllegalArgumentException::new);
-        List<ChatMessageLookUpResponse> chatMessageLookUpResponses = chatRoom.getChatMessages().stream()
+        List<ChatMessageLookUpResponse> chatMessageLookUpResponses
+                = getMessageLookUpResponseListOrderByCreateAt(chatRoom.getChatMessages() );
+        return ChatRoomDetailsResponse.fromEntity(chatRoom.getId(), chatRoom.getName(), chatMessageLookUpResponses);
+    }
+
+    private List<ChatMessageLookUpResponse> getMessageLookUpResponseListOrderByCreateAt(List<ChatMessage> chatMessageList) {
+        return chatMessageList.stream()
                 .map(ChatMessageLookUpResponse::fromEntity)
                 .sorted(Comparator.comparing(ChatMessageLookUpResponse::getCreatedAt))
                 .collect(Collectors.toList());
-        return ChatRoomDetailsResponse.fromEntity(chatRoom.getId(), chatRoom.getName(), chatMessageLookUpResponses);
     }
 
     private void createChatRoom(String chatRoomName) {
