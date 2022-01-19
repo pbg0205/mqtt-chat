@@ -32,11 +32,11 @@ class UserControllerTest {
     @MockBean
     private UserService userService;
 
-
     @Test
     @DisplayName("로그인 페이지를 렌더링한다.")
     void should_render_login_page() throws Exception {
         mockMvc.perform(get("/login"))
+                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(view().name("login"));
     }
@@ -45,6 +45,7 @@ class UserControllerTest {
     @DisplayName("회원가입 페이지를 렌더링한다.")
     void should_render_signup_page() throws Exception {
         mockMvc.perform(get("/signup"))
+                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(view().name("signup"))
                 .andExpect(model().attributeExists("userSignUpRequest"));
