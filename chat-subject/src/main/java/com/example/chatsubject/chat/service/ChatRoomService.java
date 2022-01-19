@@ -32,7 +32,7 @@ public class ChatRoomService {
                 .map(ChatMessageLookUpResponse::fromEntity)
                 .sorted(Comparator.comparing(ChatMessageLookUpResponse::getCreatedAt))
                 .collect(Collectors.toList());
-        return ChatRoomDetailsResponse.from(chatRoom, chatMessageLookUpResponses);
+        return ChatRoomDetailsResponse.fromEntity(chatRoom, chatMessageLookUpResponses);
     }
 
     @PostConstruct
