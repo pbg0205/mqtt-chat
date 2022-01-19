@@ -6,6 +6,7 @@ import com.example.chatsubject.chat.dto.ChatMessageLookUpResponse;
 import com.example.chatsubject.chat.dto.ChatRoomDetailsResponse;
 import com.example.chatsubject.chat.dto.ChatRoomLookupResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.integration.mqtt.inbound.MqttPahoMessageDrivenChannelAdapter;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 public class ChatRoomService {
 
     private final ChatRoomRepository chatRoomRepository;
+    private final MqttPahoMessageDrivenChannelAdapter mqttPahoMessageDrivenChannelAdapter;
 
     public List<ChatRoomLookupResponse> getChatRoomList() {
         List<ChatRoom> chatRoomList = chatRoomRepository.findAll();
@@ -35,12 +37,18 @@ public class ChatRoomService {
         return ChatRoomDetailsResponse.fromEntity(chatRoom.getId(), chatRoom.getName(), chatMessageLookUpResponses);
     }
 
+    private void createChatRoom(String chatRoomName) {
+        ChatRoom chatRoom = chatRoomRepository.save(new ChatRoom(chatRoomName));
+        String topic = "topic" + chatRoom.getId();
+        mqttPahoMessageDrivenChannelAdapter.addTopic(topic);
+    }
+
     @PostConstruct
     private void postConstruct() {
         chatRoomRepository.deleteAll();
-        chatRoomRepository.save(new ChatRoom("채팅방1"));
-        chatRoomRepository.save(new ChatRoom("채팅방2"));
-        chatRoomRepository.save(new ChatRoom("채팅방3"));
+        createChatRoom("채팅방1");
+        createChatRoom("채팅방2");
+        createChatRoom("채팅방3");
     }
 
 }

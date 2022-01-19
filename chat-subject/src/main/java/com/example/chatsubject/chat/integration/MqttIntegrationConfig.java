@@ -34,15 +34,20 @@ public class MqttIntegrationConfig {
 
     @Bean
     public MqttPahoMessageDrivenChannelAdapter inboundChannel() {
-        MqttPahoMessageDrivenChannelAdapter channelAdapter = new MqttPahoMessageDrivenChannelAdapter(
-                connectionProperties.getBrokerUrl(),
-                connectionProperties.getClientId(),
-                connectionProperties.getTopicFilter());
+        MqttPahoMessageDrivenChannelAdapter channelAdapter = mqttPahoMessageDrivenChannelAdapter();
 
         channelAdapter.setCompletionTimeout(inboundAdapterProperties.getCompletionTimeOut());
         channelAdapter.setConverter(new DefaultPahoMessageConverter());
         channelAdapter.setQos(inboundAdapterProperties.getQos());
         return channelAdapter;
+    }
+
+    @Bean
+    public MqttPahoMessageDrivenChannelAdapter mqttPahoMessageDrivenChannelAdapter() {
+        return new MqttPahoMessageDrivenChannelAdapter(
+                connectionProperties.getBrokerUrl(),
+                connectionProperties.getClientId(),
+                connectionProperties.getTopicFilter());
     }
 
 }
