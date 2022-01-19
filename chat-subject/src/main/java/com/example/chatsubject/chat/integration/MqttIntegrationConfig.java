@@ -7,7 +7,6 @@ import com.example.chatsubject.chat.service.ChatMessageSaveService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.integration.channel.NullChannel;
 import org.springframework.integration.dsl.IntegrationFlow;
 import org.springframework.integration.dsl.IntegrationFlows;
 import org.springframework.integration.dsl.Transformers;
@@ -29,7 +28,7 @@ public class MqttIntegrationConfig {
                 .<ChatMessageSaveRequest>handle((payload, headers) -> {
                     chatMessageSaveService.save(payload);
                     return payload;
-                }).channel(new NullChannel())
+                }).channel("nullChannel")
                 .get();
     }
 
