@@ -18,6 +18,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
@@ -70,6 +71,19 @@ class UserControllerTest {
                 Arguments.of("nickname", "", "sample@sample.com"),
                 Arguments.of("nickname", "password", "")
         );
+    }
+
+    @Test
+    @DisplayName("회원가입 성공 시, 로그인 페이지 페이지를 렌더링 한다.")
+    void should_render_login_page_when_registration_is_succeed () throws Exception {
+        mockMvc.perform(post("/signup")
+                        .param("nickname", "cooper")
+                        .param("password", "123")
+                        .param("email", "bgpar@rsupport.com")
+                        .with(csrf())
+                ).andDo(print())
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/login"));
     }
 
 }
