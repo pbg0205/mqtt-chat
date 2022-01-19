@@ -26,7 +26,7 @@ public class MqttIntegrationConfig {
         return IntegrationFlows.from(inboundChannel())
                 .transform(Transformers.fromJson(ChatMessageSaveRequest.class))
                 .<ChatMessageSaveRequest>handle((payload, headers) -> {
-                    chatMessageSaveService.save(payload);
+                    chatMessageSaveService.saveChatMessage(payload);
                     return payload;
                 }).channel("nullChannel")
                 .get();

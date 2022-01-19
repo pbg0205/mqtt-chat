@@ -17,7 +17,7 @@ public class ChatMessageSaveService {
     private final ChatMessageRepository chatMessageRepository;
 
     @Transactional
-    public void save(ChatMessageSaveRequest saveRequest) {
+    public void saveChatMessage(ChatMessageSaveRequest saveRequest) {
         chatRoomRepository.findById(saveRequest.getChatRoomId())
                 .ifPresent(chatRoom -> {
                     ChatMessage chatMessage = saveRequest.toEntity();
