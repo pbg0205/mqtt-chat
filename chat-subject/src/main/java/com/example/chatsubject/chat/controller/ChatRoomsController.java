@@ -21,13 +21,8 @@ public class ChatRoomsController {
 
     private final ChatRoomService chatRoomService;
 
-    @GetMapping
-    public String getChatRoomListPage() {
-        return "redirect:/chat/rooms";
-    }
-
     @GetMapping(value = "/rooms")
-    public String getRoomListPage(Model model) {
+    public String getChatRoomListPage(Model model) {
         List<ChatRoomLookupResponse> chatRoomList = chatRoomService.getChatRoomList();
         model.addAttribute("chatRoomList", chatRoomList);
         return "chatroom-main";
