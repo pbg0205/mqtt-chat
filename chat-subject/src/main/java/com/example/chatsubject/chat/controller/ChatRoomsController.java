@@ -37,7 +37,7 @@ public class ChatRoomsController {
     public String joinRoom(@AuthenticationPrincipal UserDetailsResponse userDetailsResponse,
                            @PathVariable Long id,
                            Model model) {
-        ChatRoomDetailsResponse chatRoomDetailsResponse = chatRoomService.findById(id);
+        ChatRoomDetailsResponse chatRoomDetailsResponse = chatRoomService.getChatRoomDetails(id);
         model.addAttribute("room", chatRoomDetailsResponse);
         model.addAttribute("member", userDetailsResponse);
         return "chatroom-detail";

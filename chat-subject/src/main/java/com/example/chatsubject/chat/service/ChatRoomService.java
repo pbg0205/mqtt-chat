@@ -26,7 +26,7 @@ public class ChatRoomService {
                 .collect(Collectors.toList());
     }
 
-    public ChatRoomDetailsResponse findById(Long id) {
+    public ChatRoomDetailsResponse getChatRoomDetails(Long id) {
         ChatRoom chatRoom = chatRoomRepository.findById(id).orElseThrow(IllegalArgumentException::new);
         List<ChatMessageLookUpResponse> chatMessageLookUpResponses = chatRoom.getChatMessages().stream()
                 .map(ChatMessageLookUpResponse::fromEntity)
