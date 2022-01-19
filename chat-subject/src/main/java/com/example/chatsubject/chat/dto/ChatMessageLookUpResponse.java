@@ -1,13 +1,14 @@
 package com.example.chatsubject.chat.dto;
 
 import com.example.chatsubject.chat.domain.ChatMessage;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Getter
-@RequiredArgsConstructor
+@RequiredArgsConstructor (access = AccessLevel.PRIVATE)
 public class ChatMessageLookUpResponse {
 
     private final Long id;
