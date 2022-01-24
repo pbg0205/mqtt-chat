@@ -25,7 +25,7 @@ public class ChatRoomService {
     public List<ChatRoomLookupResponse> getChatRoomList() {
         List<ChatRoom> chatRoomList = chatRoomRepository.findAll();
         return chatRoomList.stream()
-                .map(ChatRoomLookupResponse::from)
+                .map(ChatRoomLookupResponse::fromEntity)
                 .collect(Collectors.toList());
     }
 

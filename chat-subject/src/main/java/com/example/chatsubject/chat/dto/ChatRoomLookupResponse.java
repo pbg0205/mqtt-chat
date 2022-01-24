@@ -12,7 +12,7 @@ public class ChatRoomLookupResponse {
     private final Long roomId;
     private final String roomName;
 
-    public static ChatRoomLookupResponse from(ChatRoom chatRoom) {
+    public static ChatRoomLookupResponse fromEntity(ChatRoom chatRoom) {
         return new ChatRoomLookupResponse(chatRoom.getId(), chatRoom.getName());
     }
 }
