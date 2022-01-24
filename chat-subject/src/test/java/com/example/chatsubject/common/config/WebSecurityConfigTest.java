@@ -43,7 +43,12 @@ class WebSecurityConfigTest {
         mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
                 .apply(springSecurity())
                 .build();
+    }
 
+    @Test
+    @DisplayName("로그인 테스트")
+    @WithMockUser(username = "sample@sample.com")
+    void loginTest() throws Exception {
         User user = User.builder()
                 .nickname("cooper")
                 .email("sample@sample.com")
@@ -51,12 +56,7 @@ class WebSecurityConfigTest {
                 .build();
 
         userRepository.save(user);
-    }
 
-    @Test
-    @DisplayName("로그인 테스트")
-    @WithMockUser(username = "sample@sample.com")
-    void loginTest() throws Exception {
         mvc.perform(formLogin()
                         .user("sample@sample.com")
                         .password("password")
