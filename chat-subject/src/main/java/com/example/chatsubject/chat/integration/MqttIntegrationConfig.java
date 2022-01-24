@@ -7,7 +7,6 @@ import com.example.chatsubject.chat.service.ChatMessageSaveService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.integration.channel.NullChannel;
 import org.springframework.integration.dsl.IntegrationFlow;
 import org.springframework.integration.dsl.IntegrationFlows;
 import org.springframework.integration.dsl.Transformers;
@@ -27,23 +26,28 @@ public class MqttIntegrationConfig {
         return IntegrationFlows.from(inboundChannel())
                 .transform(Transformers.fromJson(ChatMessageSaveRequest.class))
                 .<ChatMessageSaveRequest>handle((payload, headers) -> {
-                    chatMessageSaveService.save(payload);
+                    chatMessageSaveService.saveChatMessage(payload);
                     return payload;
-                }).channel(new NullChannel())
+                }).channel("nullChannel")
                 .get();
     }
 
     @Bean
     public MqttPahoMessageDrivenChannelAdapter inboundChannel() {
-        MqttPahoMessageDrivenChannelAdapter channelAdapter = new MqttPahoMessageDrivenChannelAdapter(
-                connectionProperties.getBrokerUrl(),
-                connectionProperties.getClientId(),
-                connectionProperties.getTopicFilter());
+        MqttPahoMessageDrivenChannelAdapter channelAdapter = mqttPahoMessageDrivenChannelAdapter();
 
         channelAdapter.setCompletionTimeout(inboundAdapterProperties.getCompletionTimeOut());
         channelAdapter.setConverter(new DefaultPahoMessageConverter());
         channelAdapter.setQos(inboundAdapterProperties.getQos());
         return channelAdapter;
+    }
+
+    @Bean
+    public MqttPahoMessageDrivenChannelAdapter mqttPahoMessageDrivenChannelAdapter() {
+        return new MqttPahoMessageDrivenChannelAdapter(
+                connectionProperties.getBrokerUrl(),
+                connectionProperties.getClientId(),
+                connectionProperties.getTopicFilter());
     }
 
 }

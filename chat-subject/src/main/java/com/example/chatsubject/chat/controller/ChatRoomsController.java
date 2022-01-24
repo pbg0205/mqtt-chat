@@ -21,13 +21,8 @@ public class ChatRoomsController {
 
     private final ChatRoomService chatRoomService;
 
-    @GetMapping
-    public String getChatRoomListPage() {
-        return "redirect:/chat/rooms";
-    }
-
     @GetMapping(value = "/rooms")
-    public String getRoomListPage(Model model) {
+    public String getChatRoomListPage(Model model) {
         List<ChatRoomLookupResponse> chatRoomList = chatRoomService.getChatRoomList();
         model.addAttribute("chatRoomList", chatRoomList);
         return "chatroom-main";
@@ -37,7 +32,7 @@ public class ChatRoomsController {
     public String joinRoom(@AuthenticationPrincipal UserDetailsResponse userDetailsResponse,
                            @PathVariable Long id,
                            Model model) {
-        ChatRoomDetailsResponse chatRoomDetailsResponse = chatRoomService.findById(id);
+        ChatRoomDetailsResponse chatRoomDetailsResponse = chatRoomService.getChatRoomDetails(id);
         model.addAttribute("room", chatRoomDetailsResponse);
         model.addAttribute("member", userDetailsResponse);
         return "chatroom-detail";
