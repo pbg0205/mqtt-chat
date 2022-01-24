@@ -47,7 +47,7 @@ class MqttIntegrationConfigTest {
         int messageCount = chatRoom.getChatMessages().size();
 
         //then
-        Assertions.assertThat(messageCount).isNotZero();
+        Assertions.assertThat(messageCount).isPositive();
     }
 
 }
