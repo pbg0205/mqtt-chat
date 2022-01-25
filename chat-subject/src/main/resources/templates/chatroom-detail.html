@@ -228,7 +228,7 @@
         client.connect(options);
         client.onMessageArrived = onMessageArrived;
 
-        let topic = "topic" + roomId;
+        let topic = "topic"  + "/" + roomId;
 
         function onConnect() {
             console.log(host + " is Connected");
