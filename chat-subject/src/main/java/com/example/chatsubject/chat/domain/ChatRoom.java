@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,15 +25,13 @@ public class ChatRoom {
 
     private String name;
 
+    @OrderBy("createdAt")
     @OneToMany(mappedBy = "chatRoom", fetch = FetchType.LAZY)
     private List<ChatMessage> chatMessages = new ArrayList<>();
-
-    public ChatRoom(String name) {
-        this.name = name;
-    }
 
     public void addChatMessage(ChatMessage chatMessage) {
         chatMessages.add(chatMessage);
         chatMessage.setChatRoom(this);
     }
+
 }
