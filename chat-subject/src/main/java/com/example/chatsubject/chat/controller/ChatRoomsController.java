@@ -1,8 +1,8 @@
 package com.example.chatsubject.chat.controller;
 
-import com.example.chatsubject.account.dto.UserDetailsResponse;
-import com.example.chatsubject.chat.dto.ChatRoomDetailsResponse;
-import com.example.chatsubject.chat.dto.ChatRoomLookupResponse;
+import com.example.chatsubject.account.dto.UserDetailsDTO;
+import com.example.chatsubject.chat.dto.ChatRoomDetailsResponseDTO;
+import com.example.chatsubject.chat.dto.ChatRoomLookupResponseDTO;
 import com.example.chatsubject.chat.service.ChatRoomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -23,18 +23,18 @@ public class ChatRoomsController {
 
     @GetMapping(value = "/rooms")
     public String getChatRoomListPage(Model model) {
-        List<ChatRoomLookupResponse> chatRoomList = chatRoomService.getChatRoomList();
+        List<ChatRoomLookupResponseDTO> chatRoomList = chatRoomService.getChatRoomList();
         model.addAttribute("chatRoomList", chatRoomList);
         return "chatroom-main";
     }
 
     @GetMapping(value = "/rooms/{id}")
-    public String joinRoom(@AuthenticationPrincipal UserDetailsResponse userDetailsResponse,
+    public String joinRoom(@AuthenticationPrincipal UserDetailsDTO userDetailsDTO,
                            @PathVariable Long id,
                            Model model) {
-        ChatRoomDetailsResponse chatRoomDetailsResponse = chatRoomService.getChatRoomDetails(id);
+        ChatRoomDetailsResponseDTO chatRoomDetailsResponse = chatRoomService.getChatRoomDetails(id);
         model.addAttribute("room", chatRoomDetailsResponse);
-        model.addAttribute("member", userDetailsResponse);
+        model.addAttribute("member", userDetailsDTO);
         return "chatroom-detail";
     }
 

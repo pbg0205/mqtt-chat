@@ -3,7 +3,7 @@ package com.example.chatsubject.chat.service;
 import com.example.chatsubject.chat.domain.ChatMessage;
 import com.example.chatsubject.chat.domain.ChatMessageRepository;
 import com.example.chatsubject.chat.domain.ChatRoomRepository;
-import com.example.chatsubject.chat.dto.ChatMessageSaveRequest;
+import com.example.chatsubject.chat.dto.ChatMessageSaveRequestDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +17,7 @@ public class ChatMessageSaveService {
     private final ChatMessageRepository chatMessageRepository;
 
     @Transactional
-    public void saveChatMessage(ChatMessageSaveRequest saveRequest) {
+    public void saveChatMessage(ChatMessageSaveRequestDTO saveRequest) {
         chatRoomRepository.findById(saveRequest.getChatRoomId())
                 .ifPresent(chatRoom -> {
                     ChatMessage chatMessage = saveRequest.toEntity();

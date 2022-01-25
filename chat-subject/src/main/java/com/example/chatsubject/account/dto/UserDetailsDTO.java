@@ -16,15 +16,15 @@ import java.util.List;
 @ToString
 @RequiredArgsConstructor
 @EqualsAndHashCode(of= {"email"})
-public class UserDetailsResponse implements UserDetails {
+public class UserDetailsDTO implements UserDetails {
 
     private final String email;
     private final String password;
     private final String nickname;
     private final List<GrantedAuthority> authorities;
 
-    public static UserDetailsResponse from(User user) {
-        return new UserDetailsResponse(
+    public static UserDetailsDTO from(User user) {
+        return new UserDetailsDTO(
                 user.getEmail().getEmail(),
                 user.getPassword(),
                 user.getNickname(),

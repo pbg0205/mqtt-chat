@@ -3,9 +3,9 @@ package com.example.chatsubject.chat.service;
 import com.example.chatsubject.chat.domain.ChatMessage;
 import com.example.chatsubject.chat.domain.ChatRoom;
 import com.example.chatsubject.chat.domain.ChatRoomRepository;
-import com.example.chatsubject.chat.dto.ChatMessageLookUpResponse;
-import com.example.chatsubject.chat.dto.ChatRoomDetailsResponse;
-import com.example.chatsubject.chat.dto.ChatRoomLookupResponse;
+import com.example.chatsubject.chat.dto.ChatMessageLookUpResponseDTO;
+import com.example.chatsubject.chat.dto.ChatRoomDetailsResponseDTO;
+import com.example.chatsubject.chat.dto.ChatRoomLookupResponseDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.integration.mqtt.inbound.MqttPahoMessageDrivenChannelAdapter;
 import org.springframework.stereotype.Service;
@@ -22,24 +22,24 @@ public class ChatRoomService {
     private final ChatRoomRepository chatRoomRepository;
     private final MqttPahoMessageDrivenChannelAdapter mqttPahoMessageDrivenChannelAdapter;
 
-    public List<ChatRoomLookupResponse> getChatRoomList() {
+    public List<ChatRoomLookupResponseDTO> getChatRoomList() {
         List<ChatRoom> chatRoomList = chatRoomRepository.findAll();
         return chatRoomList.stream()
-                .map(ChatRoomLookupResponse::fromEntity)
+                .map(ChatRoomLookupResponseDTO::fromEntity)
                 .collect(Collectors.toList());
     }
 
-    public ChatRoomDetailsResponse getChatRoomDetails(Long id) {
+    public ChatRoomDetailsResponseDTO getChatRoomDetails(Long id) {
         ChatRoom chatRoom = chatRoomRepository.findById(id).orElseThrow(IllegalArgumentException::new);
-        List<ChatMessageLookUpResponse> chatMessageLookUpResponses
-                = getMessageLookUpResponseListOrderByCreateAt(chatRoom.getChatMessages() );
-        return ChatRoomDetailsResponse.fromEntity(chatRoom.getId(), chatRoom.getName(), chatMessageLookUpResponses);
+        List<ChatMessageLookUpResponseDTO> chatMessageLookUpResponses
+                = getMessageLookUpResponseListOrderByCreateAt(chatRoom.getChatMessages());
+        return ChatRoomDetailsResponseDTO.fromEntity(chatRoom.getId(), chatRoom.getName(), chatMessageLookUpResponses);
     }
 
-    private List<ChatMessageLookUpResponse> getMessageLookUpResponseListOrderByCreateAt(List<ChatMessage> chatMessageList) {
+    private List<ChatMessageLookUpResponseDTO> getMessageLookUpResponseListOrderByCreateAt(List<ChatMessage> chatMessageList) {
         return chatMessageList.stream()
-                .map(ChatMessageLookUpResponse::fromEntity)
-                .sorted(Comparator.comparing(ChatMessageLookUpResponse::getCreatedAt))
+                .map(ChatMessageLookUpResponseDTO::fromEntity)
+                .sorted(Comparator.comparing(ChatMessageLookUpResponseDTO::getCreatedAt))
                 .collect(Collectors.toList());
     }
 
