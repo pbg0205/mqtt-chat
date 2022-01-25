@@ -9,15 +9,16 @@ import java.time.LocalDateTime;
 
 @Getter
 @RequiredArgsConstructor (access = AccessLevel.PRIVATE)
-public class ChatMessageLookUpResponse {
+
+public class ChatMessageLookUpResponseDTO {
 
     private final Long id;
     private final String message;
     private final String writerName;
     private final LocalDateTime createdAt;
 
-    public static ChatMessageLookUpResponse fromEntity(ChatMessage chatMessage) {
-        return new ChatMessageLookUpResponse(
+    public static ChatMessageLookUpResponseDTO fromEntity(ChatMessage chatMessage) {
+        return new ChatMessageLookUpResponseDTO(
                 chatMessage.getId(),
                 chatMessage.getMessage(),
                 chatMessage.getWriterName(),

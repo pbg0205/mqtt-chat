@@ -1,9 +1,9 @@
 package com.example.chatsubject.chat.controller;
 
 import com.example.chatsubject.account.domain.User;
-import com.example.chatsubject.account.dto.UserDetailsResponse;
+import com.example.chatsubject.account.dto.UserDetailsDTO;
 import com.example.chatsubject.account.service.UserService;
-import com.example.chatsubject.chat.dto.ChatRoomDetailsResponse;
+import com.example.chatsubject.chat.dto.ChatRoomDetailsResponseDTO;
 import com.example.chatsubject.chat.service.ChatRoomService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -57,7 +57,7 @@ class ChatRoomsControllerTest {
     @Test
     @DisplayName("로그인한 사용자는 특정 채팅방에 입장할 수 있다.")
     void can_join_chat_room_when_user_is_login() throws Exception {
-        UserDetailsResponse userDetailsResponse = UserDetailsResponse.from(User.builder()
+        UserDetailsDTO userDetailsDTO = UserDetailsDTO.from(User.builder()
                 .email("sample@sample.com")
                 .nickname("sample")
                 .password("password")
@@ -65,11 +65,11 @@ class ChatRoomsControllerTest {
         );
 
         when(chatRoomService.getChatRoomDetails(1L)).thenReturn(
-                ChatRoomDetailsResponse.fromEntity(1L, "채팅방1", new ArrayList<>())
+                ChatRoomDetailsResponseDTO.fromEntity(1L, "채팅방1", new ArrayList<>())
         );
 
         mockMvc.perform(get("/chat/rooms/1")
-                        .with(user(userDetailsResponse)))
+                        .with(user(userDetailsDTO)))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(view().name("chatroom-detail"));

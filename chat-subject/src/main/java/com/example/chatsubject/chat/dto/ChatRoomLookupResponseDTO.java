@@ -7,12 +7,12 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor (access = AccessLevel.PRIVATE)
-public class ChatRoomLookupResponse {
+public class ChatRoomLookupResponseDTO {
 
     private final Long roomId;
     private final String roomName;
 
-    public static ChatRoomLookupResponse fromEntity(ChatRoom chatRoom) {
-        return new ChatRoomLookupResponse(chatRoom.getId(), chatRoom.getName());
+    public static ChatRoomLookupResponseDTO fromEntity(ChatRoom chatRoom) {
+        return new ChatRoomLookupResponseDTO(chatRoom.getId(), chatRoom.getName());
     }
 }

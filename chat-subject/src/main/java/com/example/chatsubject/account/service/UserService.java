@@ -4,7 +4,7 @@ package com.example.chatsubject.account.service;
 import com.example.chatsubject.account.domain.Email;
 import com.example.chatsubject.account.domain.User;
 import com.example.chatsubject.account.domain.UserRepository;
-import com.example.chatsubject.account.dto.UserDetailsResponse;
+import com.example.chatsubject.account.dto.UserDetailsDTO;
 import com.example.chatsubject.account.dto.UserSignUpRequest;
 import com.example.chatsubject.account.dto.UserSignUpResponse;
 import com.example.chatsubject.account.exception.DuplicatedUserException;
@@ -50,6 +50,6 @@ public class UserService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(new Email(username))
                 .orElseThrow(() -> new UsernameNotFoundException("존재하지 않는 사용자 입니다."));
-        return UserDetailsResponse.from(user);
+        return UserDetailsDTO.from(user);
     }
 }
