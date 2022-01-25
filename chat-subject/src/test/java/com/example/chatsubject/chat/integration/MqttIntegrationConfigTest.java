@@ -7,8 +7,6 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.configurationprocessor.json.JSONException;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.integration.dsl.IntegrationFlow;
 import org.springframework.integration.mqtt.support.MqttHeaders;
@@ -28,16 +26,17 @@ class MqttIntegrationConfigTest {
     @Test
     @Transactional
     @DisplayName("채팅 메세지 전송할 경우, 서버에서 채팅 메세지를 저장한다.")
-    void chatMessageSaveFlowTest() throws JSONException {
+    void chatMessageSaveFlowTest() {
         //given
-        JSONObject messageJson = new JSONObject();
-        messageJson.put("writerName", "cooper");
-        messageJson.put("message", "hi");
-        messageJson.put("messageType", "CHAT");
-        messageJson.put("createdAt", "2022-01-13T01:30:30");
-        messageJson.put("chatRoomId", 1L);
+        String json = "{" +
+                "\"writerName\":\"cooper\"," +
+                "\"message\":\"hi\"," +
+                "\"messageType\":\"CHAT\"," +
+                "\"createdAt\":\"2022-01-13T01:30:30\"," +
+                "\"chatRoomId\": 1" +
+                "}";
 
-        Message<String> chatMessageMQTT = MessageBuilder.withPayload(messageJson.toString())
+        Message<String> chatMessageMQTT = MessageBuilder.withPayload(json)
                 .setHeader(MqttHeaders.RECEIVED_TOPIC, "topic")
                 .build();
 
