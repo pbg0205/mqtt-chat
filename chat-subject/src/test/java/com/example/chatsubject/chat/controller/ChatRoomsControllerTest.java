@@ -41,7 +41,6 @@ class ChatRoomsControllerTest {
     @WithMockUser(username = "sample@sample.com")
     void can_render_chat_room_list_page_if_user_is_login() throws Exception {
         mockMvc.perform(get("/chat/rooms"))
-                .andDo(print())
                 .andExpect(status().isOk());
     }
 
@@ -49,7 +48,6 @@ class ChatRoomsControllerTest {
     @DisplayName("로그인하지 않은 사용자는 채팅방 리스트 페이지에 접근할 수 없다.")
     void can_not_render_chat_room_list_if_user_is_not_login() throws Exception {
         mockMvc.perform(get("/chat/rooms"))
-                .andDo(print())
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrlPattern("**/login"));
     }
@@ -70,7 +68,6 @@ class ChatRoomsControllerTest {
 
         mockMvc.perform(get("/chat/rooms/1")
                         .with(user(userDetailsDTO)))
-                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(view().name("chatroom-detail"));
     }
@@ -79,7 +76,6 @@ class ChatRoomsControllerTest {
     @DisplayName("로그인하지 않는 사용자는 특정 채팅방에 입장할 수 없다.")
     void can_not_join_room_when_user_is_not_authenticated() throws Exception {
         mockMvc.perform(get("/chat/rooms/1"))
-                .andDo(print())
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrlPattern("**/login"));
     }

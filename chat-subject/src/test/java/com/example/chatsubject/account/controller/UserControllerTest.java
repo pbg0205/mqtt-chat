@@ -16,7 +16,6 @@ import java.util.stream.Stream;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -36,7 +35,6 @@ class UserControllerTest {
     @DisplayName("로그인 페이지를 렌더링한다.")
     void should_render_login_page() throws Exception {
         mockMvc.perform(get("/login"))
-                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(view().name("login"));
     }
@@ -45,7 +43,6 @@ class UserControllerTest {
     @DisplayName("회원가입 페이지를 렌더링한다.")
     void should_render_signup_page() throws Exception {
         mockMvc.perform(get("/signup"))
-                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(view().name("signup"))
                 .andExpect(model().attributeExists("userSignUpRequest"));
@@ -62,8 +59,7 @@ class UserControllerTest {
                         .param("password", password)
                         .param("email", email)
                         .with(csrf())
-                ).andDo(print())
-                .andExpect(view().name("signup"));
+                ).andExpect(view().name("signup"));
     }
 
     private static Stream<Arguments> provide_sign_up_input_for_value_is_null_or_blank() {
@@ -82,8 +78,7 @@ class UserControllerTest {
                         .param("password", "123")
                         .param("email", "bgpar@rsupport.com")
                         .with(csrf())
-                ).andDo(print())
-                .andExpect(status().is3xxRedirection())
+                ).andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/login"));
     }
 

@@ -19,7 +19,6 @@ import static org.springframework.security.test.web.servlet.response.SecurityMoc
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.unauthenticated;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -60,8 +59,7 @@ class WebSecurityConfigTest {
         mvc.perform(formLogin()
                         .user("sample@sample.com")
                         .password("password")
-                ).andDo(print())
-                .andExpect(authenticated())
+                ).andExpect(authenticated())
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/chat/rooms"));
     }
@@ -70,7 +68,6 @@ class WebSecurityConfigTest {
     @DisplayName("로그아웃 테스트")
     void logoutTest() throws Exception {
         mvc.perform(post("/logout").with(csrf()))
-                .andDo(print())
                 .andExpect(unauthenticated())
                 .andExpect(redirectedUrl("/"));
     }
