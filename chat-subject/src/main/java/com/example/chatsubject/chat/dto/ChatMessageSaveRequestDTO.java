@@ -27,7 +27,7 @@ public class ChatMessageSaveRequestDTO {
                 .writerName(writerName)
                 .message(message)
                 .messageType(messageType)
-                .createAt(createdAt)
+                .createdAt(createdAt)
                 .build();
     }
 
