@@ -34,7 +34,7 @@ public class ChatMessage {
     @Enumerated(EnumType.STRING)
     private MessageType messageType;
 
-    private LocalDateTime createAt;
+    private LocalDateTime createdAt;
 
     @JoinColumn(name="chat_room_id")
     @ManyToOne(fetch = FetchType.LAZY)
@@ -44,11 +44,11 @@ public class ChatMessage {
     public ChatMessage(String writerName,
                        String message,
                        MessageType messageType,
-                       LocalDateTime createAt) {
+                       LocalDateTime createdAt) {
         this.writerName = writerName;
         this.message = message;
         this.messageType = messageType;
-        this.createAt = createAt;
+        this.createdAt = createdAt;
     }
 
     void setChatRoom(ChatRoom chatRoom) {

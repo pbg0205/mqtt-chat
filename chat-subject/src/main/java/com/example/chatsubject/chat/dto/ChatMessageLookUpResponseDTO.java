@@ -22,7 +22,7 @@ public class ChatMessageLookUpResponseDTO {
                 chatMessage.getId(),
                 chatMessage.getMessage(),
                 chatMessage.getWriterName(),
-                chatMessage.getCreateAt()
+                chatMessage.getCreatedAt()
         );
     }
 
