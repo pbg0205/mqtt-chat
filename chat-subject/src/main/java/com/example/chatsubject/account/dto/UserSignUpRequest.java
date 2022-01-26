@@ -23,7 +23,6 @@ public class UserSignUpRequest {
     @NotBlank(message = "{notnull.error.message}")
     private String password;
 
-    @Email(message = "{format.error.message}")
     @NotBlank(message = "{notnull.error.message}")
     private String email;
 
