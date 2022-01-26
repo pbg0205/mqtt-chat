@@ -2,39 +2,37 @@ package com.example.chatsubject.chat.controller;
 
 import com.example.chatsubject.account.domain.User;
 import com.example.chatsubject.account.dto.UserDetailsDTO;
-import com.example.chatsubject.account.service.UserService;
-import com.example.chatsubject.chat.dto.ChatRoomDetailsResponseDTO;
-import com.example.chatsubject.chat.service.ChatRoomService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
-import java.util.ArrayList;
-
-import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrlPattern;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 
-@WebMvcTest
+@SpringBootTest
 class ChatRoomsControllerTest {
 
-    @Autowired
     private MockMvc mockMvc;
 
-    @MockBean
-    private ChatRoomService chatRoomService;
+    @Autowired
+    private WebApplicationContext webApplicationContext;
 
-    @MockBean
-    private UserService userService;
+    @BeforeEach
+    void setUp() {
+        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
+                .apply(springSecurity()).build();
+    }
 
     @Test
     @DisplayName("로그인한 사용자는 채팅방 리스트 페이지에 접근할 수 있다.")
@@ -60,10 +58,6 @@ class ChatRoomsControllerTest {
                 .nickname("sample")
                 .password("password")
                 .build()
-        );
-
-        when(chatRoomService.getChatRoomDetails(1L)).thenReturn(
-                ChatRoomDetailsResponseDTO.fromEntity(1L, "채팅방1", new ArrayList<>())
         );
 
         mockMvc.perform(get("/chat/rooms/1")
