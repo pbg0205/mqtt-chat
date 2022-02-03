@@ -90,26 +90,4 @@ class UserSignUpRequestTest {
         );
     }
 
-    @ParameterizedTest
-    @MethodSource("provide_string_for_email")
-    @DisplayName("이메일을 추가하지 않은 요청일 경우, 잘못된 요청이다.")
-    void request_normal_input_except_email(String name, String password, String email) {
-
-        //given
-        UserSignUpRequest request = new UserSignUpRequest(name, password, email);
-
-        //when
-        Set<ConstraintViolation<UserSignUpRequest>> constraintValidations = validator.validate(request);
-
-        //then
-        assertThat(constraintValidations.size()).isOne();
-    }
-
-    private static Stream<Arguments> provide_string_for_email() {
-        return Stream.of(
-                Arguments.of("cooper", "djkla;djfa", ""),
-                Arguments.of("cooper", "rqkljwe;rq", "sapmle@rsupport.co."),
-                Arguments.of("cooper", "dfajdklsf", "@rsupport.com")
-        );
-    }
 }
