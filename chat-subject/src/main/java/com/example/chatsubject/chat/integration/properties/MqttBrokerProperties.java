@@ -1,4 +1,4 @@
-package com.example.chatsubject.chat.config;
+package com.example.chatsubject.chat.integration.properties;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -9,8 +9,8 @@ import org.springframework.boot.context.properties.ConstructorBinding;
 @Getter
 @ConstructorBinding
 @RequiredArgsConstructor
-@ConfigurationProperties(prefix = "mqtt.connection")
-public class MqttConnectionProperties {
+@ConfigurationProperties(prefix = "mqtt.broker")
+public class MqttBrokerProperties {
 
     private final String brokerUrl;
     private final String clientId = MqttClient.generateClientId();
