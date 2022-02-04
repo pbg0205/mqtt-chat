@@ -1,4 +1,4 @@
-package com.example.chatsubject.account.exception.handler;
+package com.example.chatsubject.account.exception.advice;
 
 import com.example.chatsubject.account.exception.DuplicatedUserException;
 import org.springframework.ui.Model;
