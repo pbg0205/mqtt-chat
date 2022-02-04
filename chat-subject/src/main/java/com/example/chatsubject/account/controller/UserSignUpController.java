@@ -1,14 +1,12 @@
 package com.example.chatsubject.account.controller;
 
 import com.example.chatsubject.account.dto.UserSignUpRequest;
-import com.example.chatsubject.account.exception.DuplicatedUserException;
-import com.example.chatsubject.account.service.UserService;
+import com.example.chatsubject.account.service.UserSignUpService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,19 +16,14 @@ import javax.validation.Valid;
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-public class UserController {
+public class UserSignUpController {
 
-    private final UserService userService;
+    private final UserSignUpService userSignUpService;
 
     @GetMapping(value = "/signup")
     public String signUpForm(Model model) {
         model.addAttribute("userSignUpRequest", new UserSignUpRequest());
         return "signup";
-    }
-
-    @GetMapping(value = "/login")
-    public String loginForm() {
-        return "login";
     }
 
     @PostMapping(value = "/signup")
@@ -39,12 +32,8 @@ public class UserController {
             return "signup";
         }
 
-        userService.signUpMember(userSignUpRequest);
+        userSignUpService.signUpMember(userSignUpRequest);
         return "redirect:/login";
     }
 
-    @ExceptionHandler(DuplicatedUserException.class)
-    public void handleDuplicatedUserException(Model model, Exception exception) {
-        model.addAttribute("error", exception);
-    }
 }

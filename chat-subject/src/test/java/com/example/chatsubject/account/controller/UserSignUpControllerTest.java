@@ -1,6 +1,6 @@
 package com.example.chatsubject.account.controller;
 
-import com.example.chatsubject.account.service.UserService;
+import com.example.chatsubject.account.service.UserSignUpService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -22,22 +22,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 
-@WebMvcTest(controllers = UserController.class)
-class UserControllerTest {
+@WebMvcTest(controllers = UserSignUpController.class)
+class UserSignUpControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    private UserService userService;
-
-    @Test
-    @DisplayName("로그인 페이지를 렌더링한다.")
-    void should_render_login_page() throws Exception {
-        mockMvc.perform(get("/login"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("login"));
-    }
+    private UserSignUpService userSignUpService;
 
     @Test
     @DisplayName("회원가입 페이지를 렌더링한다.")

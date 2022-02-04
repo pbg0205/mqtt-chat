@@ -15,11 +15,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-@SpringBootTest(classes = {UserService.class, UserRepository.class})
-class UserServiceTest {
+@SpringBootTest(classes = {UserSignUpService.class, UserRepository.class})
+class UserSignUpServiceTest {
 
     @Autowired
-    UserService userService;
+    UserSignUpService userSignUpService;
 
     @MockBean
     PasswordEncoder passwordEncoder;
@@ -37,7 +37,7 @@ class UserServiceTest {
         when(userRepository.save(any())).thenReturn(user);
 
         //when
-        UserSignUpResponse response = userService.signUpMember(request);
+        UserSignUpResponse response = userSignUpService.signUpMember(request);
 
         //then
         assertThat(request.getNickname()).isEqualTo(response.getName());
