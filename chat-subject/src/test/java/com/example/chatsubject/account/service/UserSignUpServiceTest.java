@@ -2,8 +2,8 @@ package com.example.chatsubject.account.service;
 
 import com.example.chatsubject.account.domain.User;
 import com.example.chatsubject.account.domain.UserRepository;
-import com.example.chatsubject.account.dto.UserSignUpRequest;
-import com.example.chatsubject.account.dto.UserSignUpResponse;
+import com.example.chatsubject.account.dto.UserSignUpRequestDTO;
+import com.example.chatsubject.account.dto.UserSignUpResponseDTO;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,13 +31,13 @@ class UserSignUpServiceTest {
     @DisplayName("적절한 입력 값일 경우, 정상 등록한다.")
     void create_member_when_input_is_correct() {
         //given
-        UserSignUpRequest request
-                = new UserSignUpRequest("sample", "123", "sample@rsupport.com");
+        UserSignUpRequestDTO request
+                = new UserSignUpRequestDTO("sample", "123", "sample@rsupport.com");
         User user = request.toEntity();
         when(userRepository.save(any())).thenReturn(user);
 
         //when
-        UserSignUpResponse response = userSignUpService.signUpMember(request);
+        UserSignUpResponseDTO response = userSignUpService.signUpMember(request);
 
         //then
         assertThat(request.getNickname()).isEqualTo(response.getName());

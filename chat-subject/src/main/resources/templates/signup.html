@@ -16,26 +16,21 @@
                 <div class="text-center">
                     <h3 class="text-primary">Sign Up</h3>
                 </div>
-                <form name="sign-up" method="post" th:object="${userSignUpRequest}" th:action="@{/signup}">
+                <form name="sign-up" method="post" th:object="${userSignUpRequestDTO}" th:action="@{/signup}">
                     <div class="p-4">
                         <div class="input-group mb-3">
-                                    <span class="input-group-text bg-primary"><i
-                                            class="bi bi-mailbox text-white"></i></span>
+                            <span class="input-group-text bg-primary"><i class="bi bi-mailbox text-white"></i></span>
                             <input type="text" class="form-control" id="email" name="email" placeholder="email(id)"
                                    th:field="*{email}">
                         </div>
                         <div class="input-group mb-3">
-                                    <span class="input-group-text bg-primary">
-                                        <i class="bi bi-key-fill text-white"></i>
-                                    </span>
+                            <span class="input-group-text bg-primary"><i class="bi bi-key-fill text-white"></i></span>
                             <input type="password" class="form-control" id="password" name="password"
                                    placeholder="password" th:field="*{password}">
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                         </div>
                         <div class="input-group mb-3">
-                                    <span class="input-group-text bg-primary">
-                                        <i class="bi bi-emoji-smile text-white"></i>
-                                    </span>
+                            <span class="input-group-text bg-primary"><i class="bi bi-emoji-smile text-white"></i></span>
                             <input type="text" class="form-control" id="nickname" placeholder="nickname"
                                    th:field="*{nickname}">
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>

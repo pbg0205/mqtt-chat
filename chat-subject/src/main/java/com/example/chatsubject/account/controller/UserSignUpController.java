@@ -1,6 +1,6 @@
 package com.example.chatsubject.account.controller;
 
-import com.example.chatsubject.account.dto.UserSignUpRequest;
+import com.example.chatsubject.account.dto.UserSignUpRequestDTO;
 import com.example.chatsubject.account.service.UserSignUpService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,17 +22,17 @@ public class UserSignUpController {
 
     @GetMapping(value = "/signup")
     public String signUpForm(Model model) {
-        model.addAttribute("userSignUpRequest", new UserSignUpRequest());
+        model.addAttribute("userSignUpRequestDTO", new UserSignUpRequestDTO());
         return "signup";
     }
 
     @PostMapping(value = "/signup")
-    public String signUp(@ModelAttribute @Valid UserSignUpRequest userSignUpRequest, BindingResult result) {
+    public String signUp(@ModelAttribute @Valid UserSignUpRequestDTO userSignUpRequestDTO, BindingResult result) {
         if (result.hasErrors()) {
             return "signup";
         }
 
-        userSignUpService.signUpMember(userSignUpRequest);
+        userSignUpService.signUpMember(userSignUpRequestDTO);
         return "redirect:/login";
     }
 

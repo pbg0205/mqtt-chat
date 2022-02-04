@@ -16,7 +16,7 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class UserSignUpRequestTest {
+class UserSignUpRequestDTOTest {
 
     private static Validator validator;
 
@@ -31,14 +31,14 @@ class UserSignUpRequestTest {
     void request_normal_input_values() {
 
         //given
-        UserSignUpRequest request = new UserSignUpRequest(
+        UserSignUpRequestDTO request = new UserSignUpRequestDTO(
                 "cooper",
                 "123",
                 "cooper123@rsupport.com"
         );
 
         //when
-        Set<ConstraintViolation<UserSignUpRequest>> constraintValidations = validator.validate(request);
+        Set<ConstraintViolation<UserSignUpRequestDTO>> constraintValidations = validator.validate(request);
 
         //then
         assertThat(constraintValidations.size()).isZero();
@@ -50,10 +50,10 @@ class UserSignUpRequestTest {
     void request_normal_input_except_name(String name, String password, String email) {
 
         //given
-        UserSignUpRequest request = new UserSignUpRequest(name, password, email);
+        UserSignUpRequestDTO request = new UserSignUpRequestDTO(name, password, email);
 
         //when
-        Set<ConstraintViolation<UserSignUpRequest>> constraintValidations = validator.validate(request);
+        Set<ConstraintViolation<UserSignUpRequestDTO>> constraintValidations = validator.validate(request);
 
         //then
         assertThat(constraintValidations.size()).isOne();
@@ -73,10 +73,10 @@ class UserSignUpRequestTest {
     void request_normal_input_except_password(String name, String password, String email) {
 
         //given
-        UserSignUpRequest request = new UserSignUpRequest(name, password, email);
+        UserSignUpRequestDTO request = new UserSignUpRequestDTO(name, password, email);
 
         //when
-        Set<ConstraintViolation<UserSignUpRequest>> constraintValidations = validator.validate(request);
+        Set<ConstraintViolation<UserSignUpRequestDTO>> constraintValidations = validator.validate(request);
 
         //then
         assertThat(constraintValidations.size()).isOne();
