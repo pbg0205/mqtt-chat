@@ -1,4 +1,4 @@
-package com.example.chatsubject.common.config;
+package com.example.chatsubject.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

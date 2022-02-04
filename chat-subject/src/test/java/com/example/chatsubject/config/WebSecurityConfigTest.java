@@ -1,4 +1,4 @@
-package com.example.chatsubject.common.config;
+package com.example.chatsubject.config;
 
 import com.example.chatsubject.account.domain.User;
 import com.example.chatsubject.account.domain.UserRepository;
