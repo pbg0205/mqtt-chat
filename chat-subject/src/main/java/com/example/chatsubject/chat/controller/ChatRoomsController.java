@@ -3,7 +3,7 @@ package com.example.chatsubject.chat.controller;
 import com.example.chatsubject.account.dto.UserDetailsDTO;
 import com.example.chatsubject.chat.dto.ChatRoomDetailsResponseDTO;
 import com.example.chatsubject.chat.dto.ChatRoomLookupResponseDTO;
-import com.example.chatsubject.chat.service.ChatRoomService;
+import com.example.chatsubject.chat.service.ChatRoomLookUpService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -19,11 +19,11 @@ import java.util.List;
 @RequestMapping("/chat")
 public class ChatRoomsController {
 
-    private final ChatRoomService chatRoomService;
+    private final ChatRoomLookUpService chatRoomLookUpService;
 
     @GetMapping(value = "/rooms")
     public String getChatRoomListPage(Model model) {
-        List<ChatRoomLookupResponseDTO> chatRoomList = chatRoomService.getChatRoomList();
+        List<ChatRoomLookupResponseDTO> chatRoomList = chatRoomLookUpService.getChatRoomList();
         model.addAttribute("chatRoomList", chatRoomList);
         return "chatroom-main";
     }
@@ -32,7 +32,7 @@ public class ChatRoomsController {
     public String joinRoom(@AuthenticationPrincipal UserDetailsDTO userDetailsDTO,
                            @PathVariable Long id,
                            Model model) {
-        ChatRoomDetailsResponseDTO chatRoomDetailsResponse = chatRoomService.getChatRoomDetails(id);
+        ChatRoomDetailsResponseDTO chatRoomDetailsResponse = chatRoomLookUpService.getChatRoomDetails(id);
         model.addAttribute("room", chatRoomDetailsResponse);
         model.addAttribute("member", userDetailsDTO);
         return "chatroom-detail";
