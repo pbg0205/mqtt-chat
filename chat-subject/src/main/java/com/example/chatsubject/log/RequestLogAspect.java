@@ -19,7 +19,7 @@ import java.util.Objects;
 @Slf4j
 @Aspect
 @Component
-public class LogAspect {
+public class RequestLogAspect {
 
     @Around("Pointcuts.requestLogPointcut()")
     public Object logRequest(ProceedingJoinPoint joinPoint) throws Throwable {
@@ -40,12 +40,14 @@ public class LogAspect {
 
     private Map<String, Object> getRequestHeaderMap(HttpServletRequest request) {
         Map<String, Object> headerParamMap = new LinkedHashMap<>();
+
         headerParamMap.put("RemoteAddress", request.getRemoteAddr());
         headerParamMap.put("RequestURI", request.getRequestURI());
         headerParamMap.put("HttpMethod", request.getMethod());
         headerParamMap.put("QueryString", request.getQueryString());
         headerParamMap.put("ContentType", request.getContentType());
         headerParamMap.put("Locale", request.getLocale());
+
         return headerParamMap;
     }
 
@@ -64,10 +66,12 @@ public class LogAspect {
     private static JSONObject transformToJson(HttpServletRequest request) throws JSONException {
         JSONObject jsonObject = new JSONObject();
         Enumeration<String> params = request.getParameterNames();
+
         while (params.hasMoreElements()) {
             String param = params.nextElement();
             jsonObject.put(param, request.getParameter(param));
         }
+
         return jsonObject;
     }
 
